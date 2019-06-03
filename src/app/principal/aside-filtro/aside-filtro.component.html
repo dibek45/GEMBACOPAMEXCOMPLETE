@@ -1,0 +1,58 @@
+<div class="sidenav">
+
+    
+    <p><span>6323 Resultados</span></p> 
+    
+    <ion-chip *ngFor="let filter of busquedaAccion" >
+      <ion-label>{{filter.nombre}}</ion-label>
+      <ion-icon name="close-circle" (click)="delete_filter(filter.tipo)"></ion-icon>
+    </ion-chip>
+    
+  <p>
+      
+    <ion-label>Ordenar hallazgos</ion-label>
+    <ion-select placeholder="Select One" (ionChange)="change()">
+      <ion-select-option value="f" selected>Mas recientes</ion-select-option>
+      <ion-select-option value="m">Menos recientes</ion-select-option>
+    </ion-select>
+ 
+  </p>
+
+  <div *ngIf="!areaIsSelected"><p>Area</p> 
+    <ul  style="list-style-type:none;">
+      <li  *ngFor="let item of eventos; let i=index" class="item-list" (click)="add_filter(item,i,1)">{{item.nombre}}</li>
+    </ul>  
+  </div>
+  
+  <div *ngIf="!avanceIsSelected"><p>Avance</p> 
+    <ul style="list-style-type:none;">
+      <li *ngFor="let item of busqueda.avance; let i=index"  class="item-list" (click)="add_filter(item,i,2)">{{item.nombre}}</li>
+    </ul>  
+  </div>
+
+  <div *ngIf="!responsableIsSelected"><p>Responsable</p> 
+    <ul  style="list-style-type:none;">
+      <li  *ngFor="let item of responsables let i=index" class="item-list" (click)="add_filter(item,i,3)">{{item.nombre}}</li>
+    </ul>  
+  </div>
+  
+  <div *ngIf="!tipoHallazgoIsSelected"><p>Tipo</p> 
+    <ul  style="list-style-type:none;">
+      <li *ngFor="let item of busqueda.tipo_hallazgo; let i=index" class="item-list" (click)="add_filter(item,i,6)">{{item.nombre}}</li>
+    </ul>  
+  </div>
+
+  <div *ngIf="!tipoIsSelected"><p>Tipo imp</p> 
+    <ul  style="list-style-type:none;">
+      <li *ngFor="let item of busqueda.tipo; let i=index" class="item-list" (click)="add_filter(item,i,4)">{{item.nombre}}</li>
+    </ul>  
+  </div>
+
+  <div *ngIf="!anoIsSelected"><p>Año</p> 
+    <ul  style="list-style-type:none;">
+      <li  *ngFor="let item of busqueda.ano; let i=index" class="item-list" (click)="add_filter(item,i,5)">{{item.nombre}}</li>
+    </ul>  
+  </div>
+
+</div>
+

@@ -1,0 +1,7 @@
+{
+  "name": "gembaCopamex",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

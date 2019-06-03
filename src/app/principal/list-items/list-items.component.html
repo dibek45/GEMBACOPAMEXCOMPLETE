@@ -1,0 +1,45 @@
+<ion-list> 
+<div *ngFor="let hallazgo of hallazgos | paginate: { itemsPerPage: 5, currentPage: p }">
+        
+                <ion-item>
+                    <div class="item-content" (click)="obtenerHallazgo(hallazgo)">
+                        <span class="item-content-title break-word" style="white-space: pre-line;margin-left: 10px;"> 
+                            {{hallazgo.descripcion}}
+                        </span> 
+                      <div>
+                          <div class="item-datos-image">
+                              <img src="{{hallazgo.imagen}}" class="img-item" alt="20px">
+                          </div>
+                          <div class="item-datos">
+                                <div class="seccion">
+                                    <table >
+                                        <tr>
+                                          <th></th>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                              <span><p><strong>Inicio:</strong> {{hallazgo.fecha_inicio| date:'short'}}</p></span>
+                                              <span><p><strong>Compomiso:</strong>{{hallazgo.fecha_compromiso|  date:'short'}}</p></span>
+                                              <span><p><strong>Dias:</strong>{{hallazgo.dias}}</p></span>
+                                              <span><p><strong>Avance:</strong> {{hallazgo.avance}} </p></span>
+                                              <span *ngIf="hallazgo.longitude" (click)="obtenerMapa(hallazgo)" style="cursor: pointer;"> <strong>Ver localizacion <ion-icon name="pin" style="color: #DF0101;"></ion-icon> </strong> </span>
+                                          </td>
+                                        </tr>
+                                      </table>  
+                              </div>
+                           </div>
+                      </div>
+                      <ion-badge color="medium" slot="start" style="margin-left: 10px;">{{hallazgo.tipo}}</ion-badge>
+                      <ion-chip color="warning" class="right observador">
+                          <ion-avatar>
+                            <img src="../../../../assets/img/observer.png">
+                          </ion-avatar>
+                          <ion-label color="dark">{{hallazgo.observador | maxNombre}} </ion-label>
+                      </ion-chip>
+                    </div>
+                  </ion-item>
+           
+     
+</div>
+</ion-list>
+<div class="pagination"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>

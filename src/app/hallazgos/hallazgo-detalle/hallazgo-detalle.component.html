@@ -1,0 +1,12 @@
+<ion-button  (click)="getPicture(1)" *ngIf="num_imagen<2" size="large" >Camara<ion-icon name="md-camera" ></ion-icon></ion-button>
+<ion-button  (click)="getPicture(0)" *ngIf="num_imagen<2"  size="large">Galeria <ion-icon name="images"></ion-icon></ion-button>
+
+
+<ion-list>
+        <ion-item *ngFor="let item of imagenes">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="item.imagen"></ion-img>
+          </ion-thumbnail>
+          <ion-label>{{item.fecha| date:'medium'}}</ion-label>
+        </ion-item>
+      </ion-list>

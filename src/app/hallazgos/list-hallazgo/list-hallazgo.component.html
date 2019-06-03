@@ -1,0 +1,43 @@
+
+   <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+    pullingIcon="arrow-dropdown"
+        pullingText="Suelta para refrescar"
+        refreshingSpinner="circles"
+        refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+ {{error}}
+  <ion-list *ngFor="let item of hallazgos">
+      <!-- Sliding item with text options on both sides -->
+      <ion-item-sliding>
+        <ion-item>
+            <ion-card >
+                <ion-card-header style="padding-left: 0;margin-left: 0" > 
+              <ion-item class="nothing">
+                  <ion-card-subtitle  (click)="obtener_hallazgo(item.hallazgoID)" ><strong>Descripción:</strong> {{item.descripcion}}</ion-card-subtitle>
+                  
+                </ion-item>
+          
+              </ion-card-header>
+              <ion-card-content  (click)="obtener_hallazgo(item.hallazgoID)" >
+                  <p><strong>Fecha:</strong> {{item.fecha|date:'medium'}}</p>
+          
+                  <img *ngIf="!item.imagen" src="../../assets/img/not_image.jpg">
+                  <img *ngIf="item.imagen" [src]="item.imagen"  style="height: 300px; width: 260px;"  >
+                  
+              </ion-card-content>
+            </ion-card>
+        </ion-item>
+        <ion-item-options >
+          <ion-item-option color="danger" (click)="deleteHallazgo(item.hallazgoID)">
+            <ion-icon slot="bottom" name="trash"></ion-icon>
+            Eliminar
+          </ion-item-option>
+          <ion-item-option color="secondary" (click)="uploadHallazgo(item.hallazgoID)">
+            <ion-icon slot="bottom" name="cloud-upload"></ion-icon>
+            Subir
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>

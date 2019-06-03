@@ -1,0 +1,133 @@
+.pagination{
+    width: 100%;
+   
+}
+.pagination-previous:after {
+    content: 'whatever it is you want to add';
+  }
+
+@media all and (max-width: 700px)  {
+    .observador{
+        margin-top: -5px
+    }
+    .item-datos{
+        
+        margin-left: 0px; 
+    }
+    .pagination{
+        font-size: 10px;
+    }
+  }
+
+@media all and (max-width: 1000px) and (min-width: 700px) {
+    .observador{
+        margin-top: -5px;
+        margin-left: 70px;
+    }
+    .pagination{
+        margin-right:2px;
+    }
+  }
+  
+
+
+  .img-item{
+    height: 100px;
+    margin: 10px
+}
+.item-content{
+    height: 100%;
+    padding: 5px;
+    position: relative;
+    max-width: 500px;
+
+  
+}
+
+.item-content-title{
+    position: relative;
+    padding-top: 5px;
+    margin-top: 0px;
+    font-size: 14px;
+    line-height: 1.255;
+    color: #0066c0;
+    word-wrap: break-word;
+    max-width: 40px;
+   
+}
+.item-datos{
+    position:relative;
+    font-size:13px;
+    display: inline-block;
+   // padding-bottom: 25px;
+    margin-left: 60px; 
+    margin-bottom: 25px;
+}
+.item-datos-image{
+    position:relative;
+    font-size:13px;
+    display: inline-block;
+ //   padding-bottom: 25px;
+}
+.item-datos p{
+    font-size:12px;
+    padding: 1px;
+    margin: 1px;
+    color: #555;
+    font-family: "Amazon Ember",Arial,sans-serif;
+    
+    
+}
+.seccionItem{
+    display: inline-block
+}
+.seccionImgItem{
+    display: inline-block;
+    padding: 5px;
+    margin-left: 5px
+
+}
+.seccionInfoItem{
+    display: inline-block;
+}
+
+.observador{
+    position: relative;
+   float: left;
+}
+.break-word {
+    word-break: break-all;
+    overflow: auto
+}
+.right{
+    float: right;
+    padding-right: 0px;
+}
+.seccion{
+    padding-left: 5px;
+}
+
+
+.observador{
+    margin-top: -10px
+}
+
+@media all and (max-width: 700px)  {
+    .observador{
+        margin-top: -5px
+    }
+    .item-datos{
+        
+        margin-left: 0px; 
+    }
+  }
+
+@media all and (max-width: 1000px) and (min-width: 700px) {
+    .observador{
+        margin-top: -5px;
+        margin-left: 70px;
+    }
+  }
+  
+
+

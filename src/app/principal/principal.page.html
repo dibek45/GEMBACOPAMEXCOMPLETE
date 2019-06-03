@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>   
+    <ion-buttons slot="end">
+        <ion-chip>
+            <ion-avatar>
+              <img src="../../assets/img/avatar.svg">
+            </ion-avatar>
+            <ion-label>{{usuario}}</ion-label>
+          </ion-chip>
+        </ion-buttons> 
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <app-aside-filtro class="block" (boxBusqueda)="showBusqueda($event)" (masRelevanteFilter)="masRelevante($event)"></app-aside-filtro>
+  <app-list-items class="block" [busqueda]="busquedaAccion" [relevante]="relevante" (location)="getLocation($event)"></app-list-items>
+</ion-content>
+
