@@ -15,7 +15,6 @@ export class HallazgosService {
   constructor(private _location:LocationService,private sqlite: SQLite,public alertController: AlertController, private http:HttpClient) { }
 
   insert_evento(whoID) {
-      
       return new Promise((resolve, reject) => {
         let  myDate: String = new Date().toISOString();
         this.sqlite.create({
@@ -375,24 +374,16 @@ await alert.present();
   
     const endPoint=`${environment.apiBaseUrl}/hallazgo`;
 
-    return this.http.post(endPoint,{
+    return this.http.post(endPoint,{"eventoID":eventoID,"areaID": areaID,"fecha": fecha,"responsableID": 0,
+                      "tipo_hallazgoID": tipo_hallazgoID,"tipo_implementacionID": tipo_implementacionID,
+                      "descripcion": descripcion,"comentarios": "","subareaID": subareaID,"observadorID": observadorID,
+                      "latitude":latitude,"longitude":longitude
+              })
+        }
 
-                      "eventoID":eventoID,
-                      "areaID": areaID,
-                      "fecha": fecha,
-                      "responsableID": 0,
-                      "tipo_hallazgoID": tipo_hallazgoID,
-                      "tipo_implementacionID": tipo_implementacionID,
-                      "descripcion": descripcion,
-                      "comentarios": "",
-                      "subareaID": subareaID,
-                      "observadorID": observadorID,
-                      "latitude":latitude,
-                      "longitude":longitude
-              }
-            
-          )
-    
+    putStateHallazgoHttp(hallazgoID:Number,stateID) {
+          const endPoint=`${environment.apiBaseUrl}/hallazgoState/${hallazgoID}/${stateID}`;
+          return this.http.put(endPoint,{})
         }
 }
 

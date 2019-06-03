@@ -43,6 +43,7 @@ export class HallazgoCompletePage implements OnInit {
       this._hallazgo.getHallazgoByID_api(this.hallazgoID).subscribe(res=>{
       this.hallazgo=res[0];
       this.avanceID=this.hallazgo.avanceID;
+      alert("entra")
       alert(JSON.stringify(this.hallazgo))
       },
       err=>{
@@ -99,7 +100,6 @@ export class HallazgoCompletePage implements OnInit {
         let valor=String(values); 
         this._image.insert_imagenHttpAfter(this.hallazgoID,base64Img,String(valor).substring(23)).subscribe(
           (res)=>{
-           
            scope.getImageAfter(this.hallazgoID);
 
           },
@@ -108,8 +108,6 @@ export class HallazgoCompletePage implements OnInit {
           }
         )
       });
-         
-      
     },
     err=>{
       alert(JSON.stringify(err))
@@ -152,4 +150,29 @@ export class HallazgoCompletePage implements OnInit {
     });
   
   }
+
+  updateStatus(event){
+alert('Evento:'+JSON.stringify(event)+  '         '+JSON.stringify(this.hallazgo))
+    if (this.hallazgo.avanceID<=3) {
+        if (this.noImages) {
+          alert("entra a 2")
+         this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,2).subscribe(res=>{
+          alert(JSON.stringify(res))
+         },
+         err=>{
+           alert(JSON.stringify(err))
+         })
+        }else{
+          alert("entra a 3")
+          this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,3).subscribe(res=>{
+            alert(JSON.stringify(res))
+           },
+           err=>{
+             alert(JSON.stringify(err))
+           });
+
+        }
+    }
+  }
+  
 }

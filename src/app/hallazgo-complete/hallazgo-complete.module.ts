@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { HallazgoCompletePage } from './hallazgo-complete.page';
 import { AvanceComponent } from './avance/avance.component';
+import { ComentarioComponent } from './comentario/comentario.component';
+import { FichaHallazgoComponent } from './ficha-hallazgo/ficha-hallazgo.component';
 
 const routes: Routes = [
   {
@@ -25,7 +27,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [HallazgoCompletePage,AvanceComponent],
+  declarations: [HallazgoCompletePage,AvanceComponent,ComentarioComponent,FichaHallazgoComponent],
   entryComponents:[]
 })
 export class HallazgoCompletePageModule {}

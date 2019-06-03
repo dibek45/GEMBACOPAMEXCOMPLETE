@@ -17,41 +17,7 @@
 
 <ion-content>
 <app-avance [hallazgoID]="hallazgoID" [avanceID]="avanceID"></app-avance>
-<ion-grid>
-
-  <ion-row>
-    <ion-col align-self-center>
-    <strong>Area:</strong>   Logistica
-    </ion-col>
-    <ion-col align-self-center>
-      <strong>Descripcion:</strong>  Articulos fuera de layout
-    </ion-col>
-    <ion-col align-self-center>
-    <strong> Descripcion:</strong> Observador:Manuel alejandro Garcia Olivas
-    </ion-col>
-    <ion-col>
-    <strong>Tipo:</strong>  Cuarta estandarizacion
-    </ion-col>
-  </ion-row>
-
-  <ion-row align-self-center>
-    <ion-col>
-    <strong> Fecha inicio:</strong>   30 mayo 2019
-    </ion-col>
-    <ion-col>
-     <strong> Fecha compromiso:</strong>
-    </ion-col>
-    <ion-col align-self-center>
-    <strong>Dias:</strong>  15
-    </ion-col>
-    <ion-col>
-      <strong>Implementacion</strong> Accion
-      
-    </ion-col>
-  </ion-row>
-
- 
-</ion-grid>
+<app-ficha-hallazgo [hallazgo]="hallazgo"></app-ficha-hallazgo>
 <!--https://www.youtube.com/watch?v=cH33gmOHJMU-->
 
        <ion-chip color="light">
@@ -94,11 +60,8 @@
       </ion-slides>
 
     <div class="noFound"><img src="assets\img\notImage.png" *ngIf="noImages"></div>
-    <ion-item>
-      <ion-label>Comentarios</ion-label>
-      <ion-textarea rows="6" cols="20" placeholder="Escribe algun comentario del hallazgo"></ion-textarea>
-    </ion-item>
-      
+   
+      <app-comentario (comentarioOutput)="updateStatus($event)" [comentario]="hallazgo.comentario"></app-comentario>
 
 </ion-content>
 
