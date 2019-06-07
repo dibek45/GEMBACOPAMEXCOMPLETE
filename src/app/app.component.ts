@@ -13,18 +13,7 @@ import { Storage } from '@ionic/storage';
 })
 
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Buscar hallazgos',
-      url: '/principal',
-      icon: 'search'
-    },
-    {
-      title: 'Subir hallazgos',
-      url: '/hallazgos',
-      icon: 'cloud-upload'
-    }
-  ];
+  
   usuario:String;
 
   constructor(

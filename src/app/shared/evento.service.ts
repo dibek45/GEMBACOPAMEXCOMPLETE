@@ -13,7 +13,8 @@ export class EventoService {
 
   getEventos(whoID:number,where:number) {return this.http.get(`http://10.11.1.8:81/api/area/${where}`);
   }
-  
+  getArea(whoID:number,where:number) {return this.http.get(`http://10.11.1.8:81/api/areas/${where}`);
+  }
   getSubArea(eventoID:number) {
     return this.http.get(`http://10.11.1.8:81/api/subArea/${eventoID}`);
   }

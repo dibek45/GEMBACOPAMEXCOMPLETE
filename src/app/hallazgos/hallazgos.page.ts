@@ -29,6 +29,7 @@ export class HallazgosPage implements OnInit {
   usuario: any;
   height = 20;
   coordinates: { latitude: number; longitude: number; };
+  plataformaID: number;
 
   constructor(private _location:LocationService,private storage: Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef, private _toast:ToastService,private _hallazgo:HallazgosService,private router:Router,private route: ActivatedRoute,public platform: Platform,public alertController: AlertController) {
     this.height = platform.height() - 56;
@@ -51,8 +52,8 @@ export class HallazgosPage implements OnInit {
 
    back(){
      if (this.show=="lista") {
-      this.router.navigate(['/addEvents',{ ids: [222,999] }]);
-     }else
+      this.router.navigate(['/plataforma',{"usuario":this.usuario}]);
+    }else
      if (this.show=="hallazgo") {
       this.show="lista";
      }
@@ -61,15 +62,15 @@ export class HallazgosPage implements OnInit {
 
   ngOnInit() {
   this.getLocatizacion();
-   /*this.route.params.subscribe(params => {
-        this.whoID = +params['who']; // (+) converts string 'id' to a number
+   this.route.params.subscribe(params => {
+        this.plataformaID = +params['plataformaID']; // (+) converts string 'id' to a number
         this.usuario =params['usuario'];
-    });*/
+    });
     this.show="lista";
   }
   ionViewDidEnter() {
     this.storage.get('who').then((val) => {
-      alert(val)
+     // alert(val)
       this.whoID=val;
     });
     this.storage.get('where').then((val) => {
@@ -113,11 +114,8 @@ export class HallazgosPage implements OnInit {
     this.arreglo.idEvento=this.id_evento;
     })
     await this.nuevo_hallazgo();
-
   }
-
-
-
+  
    async nuevo_hallazgo(){
      await this.getLocatizacion();
   
@@ -150,4 +148,18 @@ export class HallazgosPage implements OnInit {
      this.infoEvento=event;
       this.flag=true
     }
+
+    go(menu){
+      if (menu=='salir') {
+        this.storage.set('who', null);
+      this.storage.set('where', null);
+      this.router.navigate(['/login',]);
+      }else
+      this.router.navigate([`/${menu}`,{"usuario":this.usuario,plataformaID:this.plataformaID}]);
+  
+    }
+
+
+    
+  
 }

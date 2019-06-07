@@ -6,6 +6,7 @@ import { ImagenesService } from '../shared/imagenes.service';
 import { Storage } from '@ionic/storage';
 import { HallazgosService } from '../shared/hallazgos.service';
 import { Hallazgo } from '../shared/hallazgo.model';
+import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'app-hallazgo-complete',
@@ -31,20 +32,22 @@ export class HallazgoCompletePage implements OnInit {
   usuario: number;
   hallazgo:Hallazgo;
   avanceID:Number;
+  comentario: String;
+  plataformaID: number;
 
-  constructor(private _hallazgo:HallazgosService,private storage: Storage,private _image :ImagenesService,private router:Router, private route: ActivatedRoute,private modalController: ModalController) { }
+  constructor(private _toast:ToastService,private _hallazgo:HallazgosService,private storage: Storage,private _image :ImagenesService,private router:Router, private route: ActivatedRoute,private modalController: ModalController) { }
 
   ngOnInit() {
       this.cargar_usuario();
       this.route.params.subscribe(params => {
       this.hallazgoID = +params['hallazgoID']; 
+      this.plataformaID = +params['plataformaID']; 
       this.getImageBefore(this.hallazgoID);
       this.getImageAfter(this.hallazgoID);
       this._hallazgo.getHallazgoByID_api(this.hallazgoID).subscribe(res=>{
       this.hallazgo=res[0];
       this.avanceID=this.hallazgo.avanceID;
-      alert("entra")
-      alert(JSON.stringify(this.hallazgo))
+      this.comentario=this.hallazgo.comentario;
       },
       err=>{
         alert(JSON.stringify(err))
@@ -77,10 +80,11 @@ export class HallazgoCompletePage implements OnInit {
   async getImageAfter(hallazgoID){
     await this._image.getImagesApi(hallazgoID,1).subscribe(res=>{
       this.evidenciasAfter=res['evidencias'];   
-      if (this.evidenciasAfter==null) {
+      if (this.evidenciasAfter!== 'undefined') {
         this.noImages=true;
       }else
       this.noImages=false;
+     // alert(JSON.stringify(this.evidenciasAfter));
       this.evidenciasAfter=res['evidencias']; 
     })
     
@@ -101,6 +105,15 @@ export class HallazgoCompletePage implements OnInit {
         this._image.insert_imagenHttpAfter(this.hallazgoID,base64Img,String(valor).substring(23)).subscribe(
           (res)=>{
            scope.getImageAfter(this.hallazgoID);
+           this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,2).subscribe(res=>{
+            this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
+              this.router.navigate(['/hallazgo-complete',{"hallazgoID":this.hallazgoID,"plataformaID":this.plataformaID}])
+
+            }
+            )},
+           err=>{
+             alert(JSON.stringify(err))
+           })
 
           },
           (err)=>{
@@ -151,28 +164,71 @@ export class HallazgoCompletePage implements OnInit {
   
   }
 
-  updateStatus(event){
-alert('Evento:'+JSON.stringify(event)+  '         '+JSON.stringify(this.hallazgo))
-    if (this.hallazgo.avanceID<=3) {
+  updateComentario(event){
+    this.comentario=event;
+    if (this.comentario!='') {
+      if (this.hallazgo.avanceID<=3) {
         if (this.noImages) {
-          alert("entra a 2")
-         this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,2).subscribe(res=>{
-          alert(JSON.stringify(res))
-         },
-         err=>{
-           alert(JSON.stringify(err))
-         })
-        }else{
-          alert("entra a 3")
-          this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,3).subscribe(res=>{
-            alert(JSON.stringify(res))
+          this._hallazgo.putComentarioHallazgoHttp(this.hallazgo.hallazgoID,event).subscribe(res=>{
+         //   alert("1")
+            this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,2).subscribe(res=>{
+              this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
+                this.router.navigate(['/hallazgo-complete',{"hallazgoID":this.hallazgoID,"plataformaID":this.plataformaID}])
+              }
+              )},
+             err=>{
+               alert(JSON.stringify(err));
+             })
            },
            err=>{
              alert(JSON.stringify(err))
+           })
+        
+        }else{
+
+          this._hallazgo.putComentarioHallazgoHttp(this.hallazgo.hallazgoID,event).subscribe(res=>{
+           // alert(JSON.stringify(res))
+            this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,3).subscribe(res=>{
+        //      alert(JSON.stringify(res));
+
+        this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
+          this._toast.presentToast("Hallazgo actualizado",'success');
+          this.router.navigate(['/hallazgo-complete',{"hallazgoID":this.hallazgoID,"plataformaID":this.plataformaID}]);
+         
+        })
+            
+             },
+             err=>{
+               alert(JSON.stringify(err));
+             });
+           },
+           err=>{
+             alert(JSON.stringify(err));
            });
+         
+         
 
         }
     }
+    }else 
+    this._toast.presentToast("Escribe un comentario",'warning');
+
+   
+  }
+
+  back(){
+    
+     this.router.navigate(['/principal',{"plataformaID":this.plataformaID,"usuario":this.usuario }]);
   }
   
+
+  go(menu){
+    if (menu=='salir') {
+      this.storage.set('who', null);
+    this.storage.set('where', null);
+    this.router.navigate(['/login',]);
+    }else
+    this.router.navigate([`/${menu}`,{"usuario":this.usuario,plataformaID:this.plataformaID}]);
+
+  }
 }

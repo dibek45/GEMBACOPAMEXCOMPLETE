@@ -13,7 +13,7 @@ export class ResponsableService {
     
     
     //  let endPoint= `${environment.apiBaseUrl}:81/login/${usuario}/`+encodeURIComponent(password);
-    let endPoint= `http://10.11.1.8:81/api/responsable/1`
+    let endPoint= `http://10.11.1.8:81/api/responsable/${empresaID}`
     return this.http.get(endPoint,{});
      }
  

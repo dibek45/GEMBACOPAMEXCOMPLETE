@@ -11,6 +11,7 @@
 @import '~@ionic/angular/css/flex-utils.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+
 // Menu user profile
 .user-profile {
   .user-avatar {
@@ -25,6 +26,7 @@
   }
   .toolbar-background {
     background-image: linear-gradient(135deg, 101c85, #101c85);
+  
   }
 
   .other-data {
@@ -199,6 +201,8 @@ ion-icon[ng-reflect-disabled="true"] {
   animation-name: fadeInDown;
 }
 .firma{
+  margin-top: 10px;
+
   padding-left: 18px;
   color: #ccc;
     font-family: "Times New Roman";
@@ -262,3 +266,19 @@ img {
   font-size: 40px; //Preferred size here
 }
 
+
+  ion-menu{
+   --background: var(--ion-color-primary) !important; 
+      ion-content{            
+        --background: var(--ion-color-primary) !important;
+          ion-list-header{ 
+              --background: var(--ion-color-primary) !important;
+              --color: red !important;   
+          }
+          ion-item{
+              --background: var(--ion-color-primary) !important;
+               --color: white !important;
+               ion-icon{ padding-right: 10px !important; }
+          }
+      }
+  }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -24,8 +23,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ImagenModalPage } from './imagen-modal/imagen-modal.page';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import {Subject} from 'rxjs';
+import { MenuComponent } from './menu/menu.component';
+
+
 @NgModule({
-  declarations: [AppComponent,ImagenModalPage],
+  declarations: [AppComponent,ImagenModalPage,MenuComponent],
   entryComponents: [ImagenModalPage],
   
   imports: [
@@ -43,6 +46,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     }),
     
   ],
+
+
   providers: [
     NativeGeocoder,
     Geolocation,

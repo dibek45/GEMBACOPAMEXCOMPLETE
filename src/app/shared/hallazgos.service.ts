@@ -325,9 +325,7 @@ await alert.present();
             text: 'Ok',
             handler: (data:string) => {
               if (data!=null) {
-               resolve(parseInt(data));
-           
-            
+               resolve(parseInt(data)); 
               }
             }
           }
@@ -359,10 +357,9 @@ await alert.present();
  )}
     
   //http
-  getHallazgos_api(areaID:number,avanceID:number,responsableID:number,tipoID:number,ano:number,tipoHallazgo:number,empresaID:number,relevante:boolean){
-    let endPoint=`http://10.11.1.8:81/api/hallazgos/${areaID}/${avanceID}/${responsableID}/${tipoID}/${ano}/${tipoHallazgo}/1/1`
+  getHallazgos_api(areaID:number,avanceID:number,responsableID:number,tipoID:number,ano:number,tipoHallazgo:number,empresaID:number,relevante,plataformaID){
+    let endPoint=`http://10.11.1.8:81/api/hallazgos/${areaID}/${avanceID}/${responsableID}/${tipoID}/${ano}/${tipoHallazgo}/${empresaID}/${relevante}/${plataformaID}`
     return this.http.get(endPoint,);
-
   }
   getHallazgoByID_api(hallazgoID:number){
     let endPoint=`http://10.11.1.8:81/api/hallazgo/${hallazgoID}`
@@ -383,7 +380,12 @@ await alert.present();
 
     putStateHallazgoHttp(hallazgoID:Number,stateID) {
           const endPoint=`${environment.apiBaseUrl}/hallazgoState/${hallazgoID}/${stateID}`;
-          return this.http.put(endPoint,{})
+          return this.http.put(endPoint,{});
+        }
+
+    putComentarioHallazgoHttp(hallazgoID:Number,comentario:String) {
+          const endPoint=`${environment.apiBaseUrl}/hallazgoComentario/${hallazgoID}/${comentario}`;
+          return this.http.put(endPoint,{});
         }
 }
 

@@ -36,7 +36,7 @@ export class ListHallazgoComponent implements OnInit {
         this.changeRef.detectChanges();
         return <Array<Object>> result;
     }, (error) => {
-        alert("ERROR: "+JSON.stringify(error));
+      //  alert("ERROR: get data"+JSON.stringify(error));
     });
   } 
 
@@ -59,7 +59,9 @@ export class ListHallazgoComponent implements OnInit {
   }
 
   deleteHallazgo(id:number){
-    this._hallazgo.delete_hallazgo(id);
+    this._hallazgo.delete_hallazgo(id).then(res=>{
+      this._toast.presentToast("Hallazgo borrado con exito",'success')
+    });
     this.getData(this.whoID);
   }
 
@@ -95,7 +97,7 @@ export class ListHallazgoComponent implements OnInit {
   async uploadHallazgo(hallazgoID){
 
    this.subir_hallazgo(hallazgoID).then(res=>{
-     alert("llega aqui");
+     //alert("llega aqui");
     this.deleteHallazgo(hallazgoID);
    },
    err=>{
@@ -116,24 +118,22 @@ async subir_hallazgo(hallazgoID){
         this._hallazgo.insert_hallazgoHttp(this.infoEvento.evento,res.fecha,this.infoEvento.area,this.infoEvento.subarea,res.tipo_hallazgoID,res.tipo_implementacionID,res.descripcion,res.observadorID,res.latitude,res.longitude).subscribe((data:{result:any})=>{
                           
                         scope._imagen.get_ImagenesHallazgos(hallazgoID).then((res:{length:any,imagen:any})=>{
-                          for(var i=0; i<res.length; i++) {
-                              let base64Img=res[i].imagen.substring(23);
-                              scope.b64resize(res[i].imagen,200).then(async values=>{
-                                  let valor=String(values);                               
-                                    await scope._imagen.insert_imagenHttp(data[0].response,base64Img,valor.substring(23)).subscribe(res=>{
-                                  },
-                                  err=>{
-                                    this.error="entra a err"+JSON.stringify(err);
-                                    reject(JSON.stringify(err))
-                                  });
-                            });
-
-                                                          
-                        }
-                        resolve(JSON.stringify(res));
+                                for(var i=0; i<res.length; i++) {
+                                    let base64Img=res[i].imagen.substring(23);
+                                    scope.b64resize(res[i].imagen,200).then(async values=>{
+                                            let valor=String(values);                               
+                                              await scope._imagen.insert_imagenHttp(data[0].response,base64Img,valor.substring(23)).subscribe(res=>{
+                                            },
+                                            err=>{
+                                              this.error="entra a err"+JSON.stringify(err);
+                                              reject(JSON.stringify(err))
+                                            });
+                                      });                                       
+                              }
+                              resolve(JSON.stringify(res));
 
                             })
-                              
+                            this._toast.presentToast("hallazgo guardado","success");
           })
         },
         err=>{

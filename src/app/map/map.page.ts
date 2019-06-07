@@ -34,6 +34,7 @@ export class MapPage implements OnInit {
   private sub: any;
   coordinates: { latitude: number; longitude: number; };
   usuario:string;
+  plataformaID: number;
   constructor(private _location:LocationService,private storage: Storage,private router:Router, private route: ActivatedRoute,private _alert:AlertService, private cdr: ChangeDetectorRef,public platform:Platform){
 
 
@@ -44,6 +45,8 @@ export class MapPage implements OnInit {
           this.latMyUbi = parseFloat( params['latUbi']);
           this.latHallazgo = parseFloat(params['latitude']);
           this.lngHallazgo = parseFloat(params['longitude']);
+          this.plataformaID =  +params['plataformaID'];
+          this.usuario =  params['usuario'];
     alert(  this.latHallazgo)
       });
      
@@ -55,7 +58,7 @@ export class MapPage implements OnInit {
   ngOnInit() {
 
     
-   this.cargar_usuario();
+   
   }
   
   ngOnDestroy(){
@@ -72,15 +75,22 @@ export class MapPage implements OnInit {
   }
 
   metodo(hallazgoID:number){
-    
-    this.router.navigate(['/hallazgo-complete',{"hallazgoID":hallazgoID}]);
+    this.router.navigate(['/hallazgo-complete',{"hallazgoID":this.hallazgoID,"plataformaID":this.plataformaID,"usuario":this.usuario}]);
 
   }
 
-  cargar_usuario() {
-    this.storage.get('usuario').then((val) => {
-      this.usuario=val;
-    });
+  back(){
+    this.router.navigate(['/principal',{"plataformaID":this.plataformaID,"usuario":this.usuario}]);
+
   }
   
+  go(menu){
+    if (menu=='salir') {
+      this.storage.set('who', null);
+    this.storage.set('where', null);
+    this.router.navigate(['/login',]);
+    }else
+    this.router.navigate([`/${menu}`,{"usuario":this.usuario,plataformaID:this.plataformaID}]);
+
+  }
 }

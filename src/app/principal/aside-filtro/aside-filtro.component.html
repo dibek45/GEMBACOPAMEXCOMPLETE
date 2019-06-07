@@ -1,13 +1,17 @@
-<div class="sidenav">
+<ion-icon name="options" (click)="changeFlag()" class="iconFilter"></ion-icon>
+<div class="beforeSidenav">
 
-    
-    <p><span>6323 Resultados</span></p> 
     
     <ion-chip *ngFor="let filter of busquedaAccion" >
       <ion-label>{{filter.nombre}}</ion-label>
       <ion-icon name="close-circle" (click)="delete_filter(filter.tipo)"></ion-icon>
     </ion-chip>
+  </div>
+<div *ngIf="filtroFlag">
+<div class="sidenav">
+
     
+  
   <p>
       
     <ion-label>Ordenar hallazgos</ion-label>
@@ -53,6 +57,6 @@
       <li  *ngFor="let item of busqueda.ano; let i=index" class="item-list" (click)="add_filter(item,i,5)">{{item.nombre}}</li>
     </ul>  
   </div>
-
+</div>
 </div>
 

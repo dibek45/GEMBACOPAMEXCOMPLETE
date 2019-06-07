@@ -4,6 +4,7 @@ import { NavParams } from '@ionic/angular';
 import { ResponsableService } from 'src/app/shared/responsable.service';
 import {Responsable} from '../../shared/responsable.model';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-aside-filtro',
@@ -14,6 +15,7 @@ export class AsideFiltroComponent implements OnInit {
   
   @Output() boxBusqueda = new EventEmitter();
   @Output() masRelevanteFilter = new EventEmitter();
+  filtroFlag=true;
   busquedaAccion=new Array();
   masRevelante:boolean;
  
@@ -62,12 +64,16 @@ export class AsideFiltroComponent implements OnInit {
                   isenabled: boolean;
                   passedWhoID: any;
                   passedeventID: any;
+  whoID: any;
+  whereID: any;
 
 
-  constructor(private geolocation: Geolocation,private _evento:EventoService, private _responsable:ResponsableService) {
+  constructor(private storage:Storage,private geolocation: Geolocation,private _evento:EventoService, private _responsable:ResponsableService) {
+     
+    
     this.masRevelante=true;
     this.geolocation.getCurrentPosition().then((resp) => {
-      alert(resp.coords.latitude)
+      console.log(resp.coords.latitude)
       // resp.coords.longitude
      }).catch((error) => {
        console.log('Error getting location', error);
@@ -81,13 +87,12 @@ export class AsideFiltroComponent implements OnInit {
      });
    }
 
-  ngOnInit() {
-    this.getEventos();
-    this.getResponsables();
- 
+   ngOnInit() {
+    this.getData();
   }
 
  async  add_filter(item:Object,i,type:number){
+  // alert(type)
     if(type==1)this.areaIsSelected=true;
     if(type==2)this.avanceIsSelected=true;
     if(type==3)this.responsableIsSelected=true;
@@ -98,16 +103,14 @@ export class AsideFiltroComponent implements OnInit {
     let segundoArray
     await this.busquedaAccion.push(item);
 
-    
     segundoArray=this.busquedaAccion;
-   // alert(JSON.stringify(this.busquedaAccion))
     segundoArray = Object.assign({}, segundoArray);
-    //alert(JSON.stringify(segundoArray))
     await this.boxBusqueda.emit(segundoArray);
   
   }
 
   async delete_filter(item){
+   // alert("este es item:"+item)
       if(item==1)
         this.areaIsSelected=null;
 
@@ -141,19 +144,37 @@ export class AsideFiltroComponent implements OnInit {
 
   }
 
-  getEventos(){
+
+  getData(){
+    this.storage.get('who').then((val) => {
+      this.whoID=val;
+      
+      
+    });
+     this.storage.get('where').then((val) => {
+      this.whereID=val;
+       this.getArea(this.whereID);
+     this.getResponsables(this.whereID);
+ 
+    });
+  }
+ async  getArea(where){
+
     this.areaID=0;
     this.subAreas={};
-    this._evento.getEventos(1,1).subscribe((data) => { 
+    await this._evento.getArea
+    (1,where).subscribe((data) => { 
           this.eventos=data['areas'];
-        //  alert(JSON.stringify(this.eventos))
+    //    alert(JSON.stringify(this.eventos))
           this.isenabled=false;
         },
         ()=>{alert( "Error ")})
   }
 
-  getResponsables(){
-    this._responsable.getResponsables(1).subscribe((res:any)=>{
+ async  getResponsables(where){
+  
+
+    await this._responsable.getResponsables(where).subscribe((res:any)=>{
   
       this.responsables=res.Responsables;
      // alert(JSON.stringify(this.responsables));
@@ -165,5 +186,8 @@ export class AsideFiltroComponent implements OnInit {
   change() {
   this.masRevelante=!this.masRevelante;
   this.masRelevanteFilter.emit(this.masRevelante);
+}
+changeFlag(){
+  this.filtroFlag=!this.filtroFlag
 }
 }

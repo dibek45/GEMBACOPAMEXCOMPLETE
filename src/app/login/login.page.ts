@@ -38,21 +38,25 @@ model={
 
 async lookForSession(){
 
-await this.storage.get('who').then((val) => {
-  if(val!=null)
-  this.router.navigate(['/hallazgos']);
+await this.storage.get('who').then(async (who) => {
+  if(who!=null)
+  await this.storage.get('usuario').then(async (usuario) => {
+    if(usuario!=null)
+    await this.storage.get('where').then((where) => {
+      if(where!=null)
+      this.router.navigate(['/plataforma/',{who: who,where: where,usuario:usuario}]);
+    })
+  })
 })
 }
 
 logForm(form:NgForm){
-  
       this._usuario.log_in(form.value.usuario,form.value.password).subscribe(data=>{
         let user=data['Usuario']
-       
-                  this.storage.set('who', user[0].usuarioID);
-                 this.storage.set('where', user[0].empresaID);   
-                 this.storage.set('usuario', user[0].usuario);
-                  this.router.navigate(['/hallazgos',{who: user.usuarioID,where: user.empresaID,usuario:user.usuario}]);
+                this.storage.set('who', user[0].usuarioID);
+                this.storage.set('where', user[0].empresaID);   
+                this.storage.set('usuario', user[0].usuario);
+                this.router.navigate(['/plataforma/',{"who": user.usuarioID,"where": user.empresaID,"usuario":user.usuario}]);
    
       },
       err=>{

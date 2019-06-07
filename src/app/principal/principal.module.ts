@@ -11,6 +11,7 @@ import {ListItemsComponent} from './list-items/list-items.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MaxNombrePipe } from '../pipe/max-nombre.pipe';
 import { AgmCoreModule } from '@agm/core';
+import { AngularCollapseModule } from 'angular-collapse';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    AngularCollapseModule,
     AgmCoreModule,
     NgxPaginationModule,
     CommonModule,

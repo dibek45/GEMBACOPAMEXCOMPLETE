@@ -19,4 +19,8 @@ export class ComentarioComponent implements OnInit {
     }
   
   }
+
+  ngOnChanges(){
+ // alert("change")
+    }
 }
