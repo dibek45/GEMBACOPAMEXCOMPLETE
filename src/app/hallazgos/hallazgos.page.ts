@@ -9,6 +9,7 @@ import { ApplicationRef } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { LocationService } from '../shared/location.service';
+import { DiseñoService } from '../shared/diseño.service';
 
 @Component({
   selector: 'app-hallazgos',
@@ -31,8 +32,9 @@ export class HallazgosPage implements OnInit {
   coordinates: { latitude: number; longitude: number; };
   plataformaID: number;
   whereID: number;
+  color="danger";
 
-  constructor(private _location:LocationService,private storage: Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef, private _toast:ToastService,private _hallazgo:HallazgosService,private router:Router,private route: ActivatedRoute,public platform: Platform,public alertController: AlertController) {
+  constructor(private _diseño:DiseñoService, private _location:LocationService,private storage: Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef, private _toast:ToastService,private _hallazgo:HallazgosService,private router:Router,private route: ActivatedRoute,public platform: Platform,public alertController: AlertController) {
     this.height = platform.height() - 56;
 
     this.flag=false;
@@ -62,13 +64,13 @@ export class HallazgosPage implements OnInit {
    }
 
   ngOnInit() {
+
   this.getLocatizacion();
-   this.route.params.subscribe(params => {
-        this.plataformaID = +params['plataformaID']; // (+) converts string 'id' to a number
-        this.usuario =params['usuario'];
-        this.whereID =params['whereID'];
-    });
     this.show="lista";
+  }
+
+  ngOnChange() {
+   
   }
   ionViewDidEnter() {
     this.storage.get('who').then((val) => {
@@ -77,6 +79,16 @@ export class HallazgosPage implements OnInit {
     this.storage.get('where').then((val) => {
       console.log('Where:'+ val);
     });
+
+    this.route.params.subscribe(async params => {
+      this.plataformaID = +params['plataformaID']; 
+      this.usuario =params['usuario'];
+      this.whereID =params['whereID'];
+     await this._diseño.getColorMenu(this.plataformaID).then(res=>{
+        this.color=JSON.stringify(res);
+
+      })
+  });
  
   }
 

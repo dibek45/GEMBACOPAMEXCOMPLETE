@@ -4,6 +4,7 @@ import { LocationService } from '../shared/location.service';
 import { AlertService } from '../shared/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { DiseñoService } from '../shared/diseño.service';
 
 declare var google;
 @Component({
@@ -37,7 +38,8 @@ export class MapPage implements OnInit {
   plataformaID: number;
   whereID: number;
   whoID: number;
-  constructor(private _location:LocationService,private storage: Storage,private router:Router, private route: ActivatedRoute,private _alert:AlertService, private cdr: ChangeDetectorRef,public platform:Platform){
+  color: string;
+  constructor(private _diseño:DiseñoService,private _location:LocationService,private storage: Storage,private router:Router, private route: ActivatedRoute,private _alert:AlertService, private cdr: ChangeDetectorRef,public platform:Platform){
 
 
       this.height = this.platform.height() - 56;
@@ -48,6 +50,10 @@ export class MapPage implements OnInit {
           this.latHallazgo = parseFloat(params['latitude']);
           this.lngHallazgo = parseFloat(params['longitude']);
           this.plataformaID = +params['plataformaID'];
+          this._diseño.getColorMenu(this.plataformaID).then(res=>{
+            this.color=JSON.stringify(res);
+  
+          })
           this.usuario = params['usuario'];
           this.whereID = params['whereID'];
           this.whoID = params['whoID'];

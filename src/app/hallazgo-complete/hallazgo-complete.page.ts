@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { HallazgosService } from '../shared/hallazgos.service';
 import { Hallazgo } from '../shared/hallazgo.model';
 import { ToastService } from '../shared/toast.service';
+import { DiseñoService } from '../shared/diseño.service';
 
 @Component({
   selector: 'app-hallazgo-complete',
@@ -36,26 +37,31 @@ export class HallazgoCompletePage implements OnInit {
   plataformaID: number;
   whereID: number;
   whoID: number;
+  color: string;
 
-  constructor(private _toast:ToastService,private _hallazgo:HallazgosService,private storage: Storage,private _image :ImagenesService,private router:Router, private route: ActivatedRoute,private modalController: ModalController) { }
+  constructor(private _diseño:DiseñoService,private _toast:ToastService,private _hallazgo:HallazgosService,private storage: Storage,private _image :ImagenesService,private router:Router, private route: ActivatedRoute,private modalController: ModalController) { }
 
   ngOnInit() {
       this.cargar_usuario();
       this.route.params.subscribe(params => {
-      this.hallazgoID = +params['hallazgoID']; 
-      this.whereID = +params['whereID'];
-      this.whoID = +params['whoID'];
-      this.plataformaID = +params['plataformaID']; 
-      this.getImageBefore(this.hallazgoID);
-      this.getImageAfter(this.hallazgoID);
-      this._hallazgo.getHallazgoByID_api(this.hallazgoID).subscribe(res=>{
-      this.hallazgo=res[0];
-      this.avanceID=this.hallazgo.avanceID;
-      this.comentario=this.hallazgo.comentario;
-      },
-      err=>{
-        console.log(JSON.stringify(err));
-      })
+        this.hallazgoID = +params['hallazgoID']; 
+        this.whereID = +params['whereID'];
+        this.whoID = +params['whoID'];
+        this.plataformaID = +params['plataformaID']; 
+        this._diseño.getColorMenu(this.plataformaID).then(res=>{
+          this.color=JSON.stringify(res);
+
+        })
+        this.getImageBefore(this.hallazgoID);
+        this.getImageAfter(this.hallazgoID);
+        this._hallazgo.getHallazgoByID_api(this.hallazgoID).subscribe(res=>{
+        this.hallazgo=res[0];
+        this.avanceID=this.hallazgo.avanceID;
+        this.comentario=this.hallazgo.comentario;
+        },
+        err=>{
+          console.log(JSON.stringify(err));
+        })
    });
   }
 
@@ -116,7 +122,7 @@ export class HallazgoCompletePage implements OnInit {
            scope.getImageAfter(this.hallazgoID);
            this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,2).subscribe(res=>{
             this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
-              this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}])
+              this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":this.hallazgoID}])
             }
             )},
            err=>{
@@ -177,10 +183,9 @@ export class HallazgoCompletePage implements OnInit {
       if (this.hallazgo.avanceID<=3) {
         if (this.noImages) {
           this._hallazgo.putComentarioHallazgoHttp(this.hallazgo.hallazgoID,event).subscribe(res=>{
-         //   console.log("1")
             this._hallazgo.putStateHallazgoHttp(this.hallazgo.hallazgoID,2).subscribe(res=>{
               this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
-                this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}])
+                this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID, "hallazgoID":this.hallazgoID}])
               }
               )},
              err=>{
@@ -200,7 +205,7 @@ export class HallazgoCompletePage implements OnInit {
 
         this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
           this._toast.presentToast("Hallazgo actualizado",'success');
-          this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}]);
+          this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":this.hallazgoID}]);
          
         })
             

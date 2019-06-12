@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="tertiary">
+    <ion-toolbar color="{{tertiary}}">
         
         <ion-buttons slot="end">
           <ion-button>
@@ -14,7 +14,6 @@
           
        <h3 style="text-align: center;">Elige una plataforma</h3>
        <ion-buttons slot="end">
-          
           <ion-button (click)="go('salir')">
               Salir
             </ion-button>
@@ -36,8 +35,8 @@
       <img src="../../assets/platforms/bpm.png" tappable (click)="openPreview(3)" style="width: 350px">
     </ion-slide>
 
-    <ion-slide >
-      <img src="../../assets/platforms/calidad.png" tappable (click)="openPreview(4)" style="width: 350px">
+    <ion-slide style="margin-top: 10px" >
+      <img src="../../assets/platforms/calidad2.png" tappable (click)="openPreview(4)" style="width: 350px">
     </ion-slide>
   </ion-slides>
 </ion-content>

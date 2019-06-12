@@ -11,15 +11,17 @@ export class PlataformaPage implements OnInit {
   usuario: string;
   whereID: number;
   whoID: number;
-
+  tertiary: string;
+  
   constructor(private storage: Storage,private router:Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.usuario =params['usuario'];
-      this.whereID =params['whereID'];
-      this.whoID =params['whoID'];
-  });
+        this.tertiary="tertiary";
+        this.route.params.subscribe(params => {
+        this.usuario =params['usuario'];
+        this.whereID =params['whereID'];
+        this.whoID =params['whoID'];
+    });
   }
 
 
@@ -33,6 +35,5 @@ export class PlataformaPage implements OnInit {
     this.storage.set('where', null);
     this.router.navigate(['/login',]);
     }
-
   }
 }
