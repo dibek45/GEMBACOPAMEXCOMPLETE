@@ -13,7 +13,7 @@ var ListHallazgoComponent = /** @class */ (function () {
         var _this = this;
         this._hallazgo.getHallazgos(id).then(function (result) {
             _this.hallazgos = result;
-            alert(JSON.stringify(_this.hallazgos));
+            console.log(JSON.stringify(_this.hallazgos));
         }, function (error) {
             console.log("ERROR: " + JSON.stringify(error));
         });

@@ -30,6 +30,7 @@ export class HallazgosPage implements OnInit {
   height = 20;
   coordinates: { latitude: number; longitude: number; };
   plataformaID: number;
+  whereID: number;
 
   constructor(private _location:LocationService,private storage: Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef, private _toast:ToastService,private _hallazgo:HallazgosService,private router:Router,private route: ActivatedRoute,public platform: Platform,public alertController: AlertController) {
     this.height = platform.height() - 56;
@@ -47,12 +48,12 @@ export class HallazgosPage implements OnInit {
             longitude: +(pos.coords.longitude)
           };
       });
-    //  await alert(JSON.stringify(this.coordinates))
+    //  await console.log(JSON.stringify(this.coordinates))
    }
 
    back(){
      if (this.show=="lista") {
-      this.router.navigate(['/plataforma',{"usuario":this.usuario}]);
+      this.router.navigate(['/plataforma',{"usuario":this.usuario,"whoID":this.whoID,"whereID":this.whereID}]);
     }else
      if (this.show=="hallazgo") {
       this.show="lista";
@@ -65,26 +66,24 @@ export class HallazgosPage implements OnInit {
    this.route.params.subscribe(params => {
         this.plataformaID = +params['plataformaID']; // (+) converts string 'id' to a number
         this.usuario =params['usuario'];
+        this.whereID =params['whereID'];
     });
     this.show="lista";
   }
   ionViewDidEnter() {
     this.storage.get('who').then((val) => {
-     // alert(val)
       this.whoID=val;
     });
     this.storage.get('where').then((val) => {
       console.log('Where:'+ val);
     });
-    this.storage.get('usuario').then((val) => {
-      this.usuario=val;
-    });
+ 
   }
 
   getData(id:number) {
 
     this.hallazgos=[];
-      this._hallazgo.get_hallazgos(this.whoID).then((result) => {
+      this._hallazgo.get_hallazgos(this.whoID,this.plataformaID).then((result) => {
         this.hallazgos = <Array<Object>> result;
     }, (error) => {
         console.log("ERROR: "+JSON.stringify(error));
@@ -155,7 +154,7 @@ export class HallazgosPage implements OnInit {
       this.storage.set('where', null);
       this.router.navigate(['/login',]);
       }else
-      this.router.navigate([`/${menu}`,{"usuario":this.usuario,plataformaID:this.plataformaID}]);
+      this.router.navigate([`/${menu}`,{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}]);
   
     }
 

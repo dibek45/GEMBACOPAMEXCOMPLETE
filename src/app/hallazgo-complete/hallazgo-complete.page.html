@@ -67,16 +67,16 @@
             </ion-grid>
     
      
-      <ion-slides [options]="sliderOpts" [pager]="true" *ngIf="!noImages" class="spider">
+      <ion-slides [options]="sliderOpts" [pager]="true" *ngIf="!noImages; else elseBlock" class="spider">
           <ion-slide *ngFor="let img2 of evidenciasAfter">
             <img src="{{img2.imagen}}" tappable (click)="openPreview(img2.imagen)">
           </ion-slide>
       </ion-slides>
-
-    <div class="noFound"><img src="assets\img\notImage.png" *ngIf="noImages"></div>
+      
+      <ng-template #elseBlock>
+        <div class="noFound"><img src="assets\img\notImage.png"></div>
+      </ng-template>
    
       <app-comentario (comentarioOutput)="updateComentario($event)" [comentario]="comentario"></app-comentario>
 
 </ion-content>
-
-

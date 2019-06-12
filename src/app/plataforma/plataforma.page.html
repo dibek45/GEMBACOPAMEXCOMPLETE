@@ -12,7 +12,7 @@
     
       <ion-toolbar color="tertiary">
           
-       <h1 style="text-align: center;">Elige una plataforma</h1>
+       <h3 style="text-align: center;">Elige una plataforma</h3>
        <ion-buttons slot="end">
           
           <ion-button (click)="go('salir')">
@@ -23,15 +23,21 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides [options]="sliderOpts" [pager]="true" class="spider">
+  <ion-slides [pager]="true" class="spider">
     <ion-slide >
       <img src="../../assets/platforms/gw3.jpg" tappable (click)="openPreview(1)" style="width: 340px">
     </ion-slide>
+   
     <ion-slide >
-      <img src="../../assets/platforms/bpm.png" tappable (click)="openPreview(2)" style="width: 350px">
+      <img src="../../assets/platforms/5s.jpg" tappable (click)="openPreview(2)" style="width: 350px">
     </ion-slide>
+
     <ion-slide >
-      <img src="../../assets/platforms/5s.jpg" tappable (click)="openPreview(3)" style="width: 350px">
+      <img src="../../assets/platforms/bpm.png" tappable (click)="openPreview(3)" style="width: 350px">
+    </ion-slide>
+
+    <ion-slide >
+      <img src="../../assets/platforms/calidad.png" tappable (click)="openPreview(4)" style="width: 350px">
     </ion-slide>
   </ion-slides>
 </ion-content>

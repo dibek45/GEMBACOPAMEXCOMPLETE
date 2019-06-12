@@ -16,12 +16,12 @@ var HallazgosService = /** @class */ (function () {
                 .then(function (db) {
                 db.executeSql('CREATE TABLE IF NOT EXISTS Eventos92(idEvento INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER,tipo_evento TEXT,area TEXT, areaID INTEGER,subarea TEXT, subareaID INTEGER, whoID INTEGER)', [])
                     .then(function () { return console.log('Executed SQL'); })
-                    .catch(function (e) { return alert(JSON.stringify(e)); });
+                    .catch(function (e) { return console.log(JSON.stringify(e)); });
                 db.executeSql('INSERT INTO Eventos92 VALUES(NULL,?,?,?,?,?,?,?,?)', [myDate, 0, "", "", 0, "", 0, whoID])
                     .then(function () { return resolve('Executed SQL'); })
                     .catch(function (e) { return reject(JSON.stringify(e)); });
             })
-                .catch(function (e) { return alert(JSON.stringify(e)); });
+                .catch(function (e) { return console.log(JSON.stringify(e)); });
         });
     };
     HallazgosService.prototype.get_eventos = function (whoID) {
@@ -35,7 +35,7 @@ var HallazgosService = /** @class */ (function () {
                 .then(function (db) {
                 db.executeSql('CREATE TABLE IF NOT EXISTS Eventos92(idEvento INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER,tipo_evento TEXT,area TEXT, areaID INTEGER,subarea TEXT, subareaID INTEGER, whoID INTEGER)', [])
                     .then(function () { return console.log('Executed SQL'); })
-                    .catch(function (e) { return alert(JSON.stringify(e)); });
+                    .catch(function (e) { return console.log(JSON.stringify(e)); });
                 db.executeSql('Select * from Eventos92', [])
                     .then(function (res) {
                     for (var i = 0; i < res.rows.length; i++) {
@@ -59,9 +59,9 @@ var HallazgosService = /** @class */ (function () {
                 .then(function (db) {
                 db.executeSql('DELETE FROM Eventos92 WHERE idEvento=?', [eventoID])
                     .then(function () { return console.log('Executed SQL'); })
-                    .catch(function (e) { return alert(JSON.stringify(e)); });
+                    .catch(function (e) { return console.log(JSON.stringify(e)); });
             })
-                .catch(function (e) { return alert(JSON.stringify(e)); });
+                .catch(function (e) { return console.log(JSON.stringify(e)); });
         });
     };
     HallazgosService.prototype.getHallazgos = function (id) {

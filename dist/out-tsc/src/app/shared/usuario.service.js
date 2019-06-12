@@ -7,7 +7,7 @@ var UsuarioService = /** @class */ (function () {
         this.http = http;
     }
     UsuarioService.prototype.log_in = function (usuario, password) {
-        alert(usuario + password);
+        console.log(usuario + password);
         var endPoint = environment.apiBaseUrl + ":81/login/" + usuario + "/" + encodeURIComponent(password);
         return this.http.get(endPoint, {});
     };

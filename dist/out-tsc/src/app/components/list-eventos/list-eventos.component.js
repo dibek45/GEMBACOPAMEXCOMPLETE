@@ -41,7 +41,7 @@ var ListEventosComponent = /** @class */ (function () {
                                 else
                                     _this.thereIsEvent.emit(false);
                                 console.log(JSON.stringify(res)),
-                                    function (err) { alert(err); };
+                                    function (err) { console.log(err); };
                             })];
                     case 2:
                         _a.sent();
@@ -56,7 +56,7 @@ var ListEventosComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         this._hallazgo.delete_evento(rowid).then(function (res) {
-                            //alert(res);
+                            //console.log(res);
                         });
                         return [4 /*yield*/, this.getData()];
                     case 1:

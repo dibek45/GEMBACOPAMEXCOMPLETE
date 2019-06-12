@@ -45,15 +45,16 @@ export class CompleteInformationPage implements OnInit {
 
     this.areaID=0;
     this.subAreas={};
+    /*
     this._evento.getEventos(this.passedWhoID,this.passedWhereID).subscribe((data) => { 
           this.eventos=data['areas'];
           this.isenabled=false;
         },
-        ()=>{alert( "Error ")})
-  }
+        ()=>{console.log( "Error ")})
+      */}
  
   async get_evento(evento){
-    alert("entra a buscar subarea")
+    
     this.subAreaID=null;
     this.tipo_evento=evento.name;
                 this.tipo_eventoID=evento.id;
@@ -64,9 +65,9 @@ export class CompleteInformationPage implements OnInit {
               (data) => {
                 this.subAreas = data['Responsables'];//Esto es la area corregir SP
                this.isenabled=true;
-               alert(JSON.stringify(this.subAreas))
+              // console.log(JSON.stringify(this.subAreas))
               },
-              (error) =>alert(JSON.stringify(error))
+              (error) =>console.log(JSON.stringify(error))
             )  
   }
 
@@ -82,7 +83,7 @@ export class CompleteInformationPage implements OnInit {
       });
       
     }else 
-    alert("Debes ingresar los datos");
+    console.log("Debes ingresar los datos");
      
   }
 

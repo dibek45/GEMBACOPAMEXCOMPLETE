@@ -18,7 +18,7 @@
               Subir
             </ion-button>
           </ion-buttons>
-          <ion-buttons slot="primary">
+          <ion-buttons slot="end">
             <ion-button (click)="go('principal')" >
               Buscar
             </ion-button>
@@ -37,9 +37,9 @@
         </ion-fab-button>
       </ion-fab>
  
-      <app-add-info-hallazgo  *ngIf="show==='lista'" (infoEvento)="checarInfoHallazgo($event)"></app-add-info-hallazgo>
+      <app-add-info-hallazgo  *ngIf="show==='lista'" (infoEvento)="checarInfoHallazgo($event)" [plataformaID]="plataformaID" [whereID]="whereID" [whoID]="whoID"></app-add-info-hallazgo>
 
-  <app-list-hallazgo (id_elemento)=itemHallasgo($event)  *ngIf="show==='lista'" [id_evento]="id_evento" [flag]="flag" [infoEvento]="infoEvento" ></app-list-hallazgo>
+  <app-list-hallazgo (id_elemento)=itemHallasgo($event)  *ngIf="show==='lista'" [id_evento]="id_evento" [flag]="flag" [infoEvento]="infoEvento" [plataformaID]="plataformaID" [whoID]="whoID" [whereID]="whereID"></app-list-hallazgo>
   <app-hallazgo-detalle [id_hallazgo]="parentID" *ngIf="show==='hallazgo'" ></app-hallazgo-detalle>
   
 </ion-content>

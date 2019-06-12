@@ -26,7 +26,7 @@ var LoginPage = /** @class */ (function () {
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.storage.get('who').then(function (val) {
-                            //alert(val)
+                            //console.log(val)
                             if (val != null)
                                 _this.router.navigateByUrl('/addEvents');
                         })];
@@ -40,7 +40,7 @@ var LoginPage = /** @class */ (function () {
     LoginPage.prototype.logForm = function (form) {
         var _this = this;
         this._usuario.log_in(form.value.usuario, form.value.password).subscribe(function (data) {
-            // alert(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
             _this.storage.set('who', data[0].usuarioID);
             _this.storage.set('where', data[0].empresaID);
             _this.router.navigate(['/addEvents', { ids: [222, 999] }]);

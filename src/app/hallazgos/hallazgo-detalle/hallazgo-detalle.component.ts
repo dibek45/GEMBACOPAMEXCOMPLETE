@@ -35,7 +35,7 @@ export class HallazgoDetalleComponent implements OnInit {
    this.num_imagen=0;
     this._imagen.get_ImagenesHallazgos(id).then(res=>{
       this.imagenes=res;
-    //  alert(JSON.stringify(this.imagenes))
+    //  console.log(JSON.stringify(this.imagenes))
       this.imagenes.forEach(element => {
         this.num_imagen++;
       });
@@ -62,14 +62,14 @@ export class HallazgoDetalleComponent implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       this.image = `data:image/jpeg;base64,${imageData}`;
       this._imagen.save_imagen_camera(this.image,this.id_hallazgo).then(res=>{
-      //  alert(res),
+      //  console.log(res),
         err=>{
-          alert(err)
+          console.log(err)
         }
       });
       this.getData(this.id_hallazgo);
     }, (err) => {
-      alert(err)
+      console.log(err)
     });
   }
 

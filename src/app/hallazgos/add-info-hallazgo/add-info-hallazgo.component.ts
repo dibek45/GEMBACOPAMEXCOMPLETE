@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { EventoService } from 'src/app/shared/evento.service';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -13,6 +13,10 @@ export class AddInfoHallazgoComponent implements OnInit {
   area;
   form:any = {};
   subareas: Object;
+  @Input() plataformaID:number;
+  @Input() whereID:number;
+  @Input() whoID:number;
+
   @Output() infoEvento = new EventEmitter<Object>();
   constructor(private formBuilder: FormBuilder,private _evento:EventoService) { 
 
@@ -20,25 +24,25 @@ export class AddInfoHallazgoComponent implements OnInit {
       evento:['',Validators.required],
       subareaID:['',Validators.required]
     });
-
   }
 
   ngOnInit() {
-    this._evento.getEventos(1,1).subscribe(res=>{
-      this.eventos=res['areas']
-     // alert(JSON.stringify(res))
-    })
   }
 
-
+ngOnChanges(){
+  this._evento.getEventos(1,this.whereID,this.plataformaID).subscribe(res=>{
+    this.eventos=res['areas'];
+  },
+  err=>{
+    console.log(JSON.stringify(err))
+  });
+}
   getarea(obj:any){
     this.infoEvento.emit({"area":this.form.value.areaID,"subarea":null})
-    //alert(JSON.stringify(this.form.value.evento));
     this._evento.getSubArea(this.form.value.evento.areaID)
     .subscribe(
       (data) => {
         this.subareas = data['Areas'];
-      //  alert(JSON.stringify(this.subareas));
       },
       (error) =>{
         console.error(error);
@@ -47,7 +51,6 @@ export class AddInfoHallazgoComponent implements OnInit {
   }
 
   getSubarea(event:Event){
-   // alert(JSON.stringify(this.form.value.areaID+' , subarea:'+this.form.value.subareaID));
     this.infoEvento.emit({"evento":this.form.value.evento.id,"area":this.form.value.evento.areaID,"subarea":this.form.value.subareaID})
   }
 }

@@ -13,15 +13,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-hallazgo.component.scss'],
 })
 export class ListHallazgoComponent implements OnInit {
+
   @Input() id_evento:number;
   @Input() hallazgos:any;
   @Output() id_elemento = new EventEmitter<number>();
   @Input() infoEvento:any;
+  @Input() usuario:string;
+  @Input() plataformaID:number;
+  @Input() whoID:number;
   eventos={};
-  whoID: number;
-  whereID: number;
+  @Input() whereID:number;
+
   flagUpload:boolean;
-  error:string=""
+  error:string="";
+
 
   constructor(private router:Router,private _imagen:ImagenesService,private _toast:ToastService,public alertController: AlertController,private storage:Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef,private _hallazgo:HallazgosService) {
    }
@@ -31,13 +36,14 @@ export class ListHallazgoComponent implements OnInit {
   }
 
   getData(id:number):any {
-      this._hallazgo.get_hallazgos(id).then((result) => {
+
+      this._hallazgo.get_hallazgos(id,this.plataformaID).then((result) => {
         this.hallazgos=  <Array<Object>> result;
         this.changeRef.detectChanges();
         return <Array<Object>> result;
     }, (error) => {
-      //  alert("ERROR: get data"+JSON.stringify(error));
-    });
+        console.log("ERROR: get data"+JSON.stringify(error));
+    }); 
   } 
 
   @Input() flag() {
@@ -97,11 +103,11 @@ export class ListHallazgoComponent implements OnInit {
   async uploadHallazgo(hallazgoID){
 
    this.subir_hallazgo(hallazgoID).then(res=>{
-     //alert("llega aqui");
+     //console.log("llega aqui");
     this.deleteHallazgo(hallazgoID);
    },
    err=>{
-     alert(JSON.stringify(err))
+     console.log(JSON.stringify(err))
    })
     
  
@@ -138,7 +144,7 @@ async subir_hallazgo(hallazgoID){
         },
         err=>{
           reject(JSON.stringify(err))
-          alert(JSON.stringify(err));
+          console.log(JSON.stringify(err));
         })
       
       }
@@ -183,6 +189,7 @@ async subir_hallazgo(hallazgoID){
   
 
   irDetalle(hallazgoID){
-    this.router.navigate(['/hallazgo-complete',{"hallazgoID":hallazgoID}]);
+    console.log("entra aqui "+this.whereID)
+    this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}]);
   }
 }

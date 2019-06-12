@@ -35,6 +35,8 @@ export class MapPage implements OnInit {
   coordinates: { latitude: number; longitude: number; };
   usuario:string;
   plataformaID: number;
+  whereID: number;
+  whoID: number;
   constructor(private _location:LocationService,private storage: Storage,private router:Router, private route: ActivatedRoute,private _alert:AlertService, private cdr: ChangeDetectorRef,public platform:Platform){
 
 
@@ -45,9 +47,11 @@ export class MapPage implements OnInit {
           this.latMyUbi = parseFloat( params['latUbi']);
           this.latHallazgo = parseFloat(params['latitude']);
           this.lngHallazgo = parseFloat(params['longitude']);
-          this.plataformaID =  +params['plataformaID'];
-          this.usuario =  params['usuario'];
-    alert(  this.latHallazgo)
+          this.plataformaID = +params['plataformaID'];
+          this.usuario = params['usuario'];
+          this.whereID = params['whereID'];
+          this.whoID = params['whoID'];
+    
       });
      
   }
@@ -67,7 +71,7 @@ export class MapPage implements OnInit {
 
 
   getEnd(event){
-    alert(JSON.stringify(event))
+    console.log(JSON.stringify(event))
   }
 
   async markerClick(a){
@@ -75,12 +79,12 @@ export class MapPage implements OnInit {
   }
 
   metodo(hallazgoID:number){
-    this.router.navigate(['/hallazgo-complete',{"hallazgoID":this.hallazgoID,"plataformaID":this.plataformaID,"usuario":this.usuario}]);
+    this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID, "hallazgoID":this.hallazgoID}]);
 
   }
 
   back(){
-    this.router.navigate(['/principal',{"plataformaID":this.plataformaID,"usuario":this.usuario}]);
+    this.router.navigate(['/principal',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}]);
 
   }
   
@@ -90,7 +94,6 @@ export class MapPage implements OnInit {
     this.storage.set('where', null);
     this.router.navigate(['/login',]);
     }else
-    this.router.navigate([`/${menu}`,{"usuario":this.usuario,plataformaID:this.plataformaID}]);
-
+    this.router.navigate([`/${menu}`,{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}]);
   }
 }

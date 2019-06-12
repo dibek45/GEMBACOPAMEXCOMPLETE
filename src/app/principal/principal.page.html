@@ -32,6 +32,6 @@
 <ion-content>
   
   <app-aside-filtro class="block" (boxBusqueda)="showBusqueda($event)" (masRelevanteFilter)="masRelevante($event)"></app-aside-filtro>
-  <app-list-items class="block" [busqueda]="busquedaAccion" [relevante]="relevante" [plataformaID]="plataformaID"  [usuario]="usuario" (location)="getLocation($event)"></app-list-items>
+  <app-list-items class="block" [busqueda]="busquedaAccion" [relevante]="relevante" [plataformaID]="plataformaID"  [usuario]="usuario" [whoID]="whoID" [whereID]="whereID" (location)="getLocation($event)"></app-list-items>
 </ion-content>
 

@@ -27,6 +27,8 @@ export class PrincipalPage implements OnInit {
       icon: 'cloud-upload'
     }
   ];
+  whereID: number;
+  whoID: number;
 
   constructor(private storage: Storage,private router:Router,private route: ActivatedRoute) { }
 
@@ -34,6 +36,9 @@ export class PrincipalPage implements OnInit {
     this.route.params.subscribe(params => {
         this.plataformaID = +params['plataformaID']; // (+) converts string 'id' to a number
         this.usuario =params['usuario'];
+        this.whereID =params['whereID'];
+        this.whoID =params['whoID'];
+
     });
   }
   
@@ -57,17 +62,18 @@ export class PrincipalPage implements OnInit {
   }
 
   back(){
-    this.router.navigate(['/plataforma',{"usuario":this.usuario}]);
+    this.router.navigate(['/plataforma',{"usuario":this.usuario,"whereID":this.whereID}]);
   }
 
   go(menu){
     
     if (menu=='salir') {
-      this.storage.set('who', null);
+    this.storage.set('who', null);
     this.storage.set('where', null);
+    this.storage.set('usuario', null);
     this.router.navigate(['/login',]);
     }else
-    this.router.navigate([`/${menu}`,{"usuario":this.usuario,plataformaID:this.plataformaID}]);
+    this.router.navigate([`/${menu}`,{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID}]);
 
   }
 }

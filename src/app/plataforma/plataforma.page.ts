@@ -9,19 +9,22 @@ import { Storage } from '@ionic/storage';
 })
 export class PlataformaPage implements OnInit {
   usuario: string;
+  whereID: number;
+  whoID: number;
 
   constructor(private storage: Storage,private router:Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.usuario =params['usuario'];
-    
+      this.whereID =params['whereID'];
+      this.whoID =params['whoID'];
   });
   }
 
 
   openPreview(plataforma){
-    this.router.navigate(['/principal/',{"plataformaID":plataforma,"usuario":this.usuario}]);
+    this.router.navigate(['/principal/',{"plataformaID":plataforma,"usuario":this.usuario, "whereID":this.whereID, "whoID":this.whoID}]);
   }
 
   go(menu){

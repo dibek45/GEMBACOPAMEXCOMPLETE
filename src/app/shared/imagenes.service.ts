@@ -47,13 +47,13 @@ export class ImagenesService {
             .then(res => console.log('BIEN')).catch(e => console.log(JSON.stringify(e)));
             db.executeSql('CREATE TABLE IF NOT EXISTS imagenes_table(rowid INTEGER PRIMARY KEY, imagen TEXT,imagen_mini TEXT,  fecha TEXT, hallazgoID INTEGER, FOREIGN KEY(hallazgoID) REFERENCES nuevo_hallazgo (hallazgoID))', [])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
+              .catch(e => console.log(JSON.stringify(e)));
              
               db.executeSql('SELECT * FROM imagenes_table WHERE hallazgoID=? ', [id])
               .then((res) => {
                 let imagenes = [];
                 for(var i=0; i<res.rows.length; i++) {
-                  // alert(res.rows.item(i).rowid);
+                  // console.log(res.rows.item(i).rowid);
                   let evidencia = res.rows.item(i).imagen;
                   imagenes.push({rowid:res.rows.item(i).rowid,imagen:evidencia,fecha:res.rows.item(i).fecha})
                 }

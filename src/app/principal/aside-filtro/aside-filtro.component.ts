@@ -92,7 +92,7 @@ export class AsideFiltroComponent implements OnInit {
   }
 
  async  add_filter(item:Object,i,type:number){
-  // alert(type)
+  // console.log(type)
     if(type==1)this.areaIsSelected=true;
     if(type==2)this.avanceIsSelected=true;
     if(type==3)this.responsableIsSelected=true;
@@ -110,7 +110,7 @@ export class AsideFiltroComponent implements OnInit {
   }
 
   async delete_filter(item){
-   // alert("este es item:"+item)
+   // console.log("este es item:"+item)
       if(item==1)
         this.areaIsSelected=null;
 
@@ -132,12 +132,12 @@ export class AsideFiltroComponent implements OnInit {
       let segundoArray=new Array();
     await  this.busquedaAccion.forEach(obj => {
         if(obj.tipo==item){
-         // alert("se iguala obj.item:"+JSON.stringify(obj)+" pasado de metodo:"+item);
+         // console.log("se iguala obj.item:"+JSON.stringify(obj)+" pasado de metodo:"+item);
         }else{
           segundoArray.push(obj);
         }
       });
-      //alert(this.masRevelante)
+      //console.log(this.masRevelante)
      
       this.busquedaAccion=segundoArray;
       this.boxBusqueda.emit(this.busquedaAccion);
@@ -165,10 +165,10 @@ export class AsideFiltroComponent implements OnInit {
     await this._evento.getArea
     (1,where).subscribe((data) => { 
           this.eventos=data['areas'];
-    //    alert(JSON.stringify(this.eventos))
+    //    console.log(JSON.stringify(this.eventos))
           this.isenabled=false;
         },
-        ()=>{alert( "Error ")})
+        ()=>{console.log( "Error ")})
   }
 
  async  getResponsables(where){
@@ -177,9 +177,9 @@ export class AsideFiltroComponent implements OnInit {
     await this._responsable.getResponsables(where).subscribe((res:any)=>{
   
       this.responsables=res.Responsables;
-     // alert(JSON.stringify(this.responsables));
+     // console.log(JSON.stringify(this.responsables));
     },
-    err=>{alert(JSON.stringify(err))})
+    err=>{console.log(JSON.stringify(err))})
   }
 
 

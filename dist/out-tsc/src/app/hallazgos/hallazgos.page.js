@@ -10,15 +10,15 @@ var HallazgosPage = /** @class */ (function () {
         this.platform = platform;
         this.alertController = alertController;
         this.platform.backButton.subscribe(function () {
-            alert("se preciona el boton back");
+            console.log("se preciona el boton back");
         });
         this.platform.backButton.subscribeWithPriority(0, function () {
-            alert("se preciona el boton back sin saber que hacer");
+            console.log("se preciona el boton back sin saber que hacer");
         });
     }
     HallazgosPage.prototype.ngOnInit = function () {
         this.id_evento = parseInt(this.route.snapshot.paramMap.get('id'));
-        alert(this.id_evento);
+        console.log(this.id_evento);
         this.show = "lista";
         this.presentAlertPromptDescription();
     };

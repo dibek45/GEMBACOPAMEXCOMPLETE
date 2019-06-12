@@ -24,12 +24,12 @@ export class HallazgosService {
           .then((db: SQLiteObject) => {
             db.executeSql('CREATE TABLE IF NOT EXISTS Eventos92(idEvento INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER,tipo_evento TEXT,area TEXT, areaID INTEGER,subarea TEXT, subareaID INTEGER, whoID INTEGER)', [])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
+              .catch(e => console.log(JSON.stringify(e)));
               db.executeSql('INSERT INTO Eventos92 VALUES(NULL,?,?,?,?,?,?,?,?)',[myDate,0,"","",0,"",0,whoID])
               .then(() => resolve('Executed SQL'))
               .catch(e => reject(JSON.stringify(e)));
           })
-          .catch(e => alert(JSON.stringify(e)));
+          .catch(e => console.log(JSON.stringify(e)));
     
       }
     )}
@@ -44,7 +44,7 @@ export class HallazgosService {
           .then((db: SQLiteObject) => {
             db.executeSql('CREATE TABLE IF NOT EXISTS Eventos92(idEvento INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER,tipo_evento TEXT,area TEXT, areaID INTEGER,subarea TEXT, subareaID INTEGER, whoID INTEGER)', [])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
+              .catch(e => console.log(JSON.stringify(e)));
               db.executeSql('SELECT e.idEvento, e.tipo_evento,e.tipo_eventoID, IFNULL( h.hallazgos,0) hallazgos,e.fecha,e.areaID,h.imagenes FROM Eventos92 e LEFT JOIN( SELECT h.idEvento, COUNT(*) hallazgos, SUM(i.imagenes) imagenes FROM nuevo_hallazgo  h  JOIN (  SELECT hallazgoID, COUNT(*) imagenes FROM imagenes_table  GROUP BY hallazgoID) i ON i.hallazgoID = h.hallazgoID GROUP BY h.idEvento) h ON h.idEvento = e.idEvento WHERE whoID=?', [whoID])
               .then((res) => {
              
@@ -71,10 +71,10 @@ export class HallazgosService {
           .then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM Eventos92 WHERE idEvento=?', [eventoID])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
+              .catch(e => console.log(JSON.stringify(e)));
               
           })
-          .catch(e => alert(JSON.stringify(e)));
+          .catch(e => console.log(JSON.stringify(e)));
     
       }
     )}
@@ -89,20 +89,20 @@ export class HallazgosService {
           .then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM nuevo_hallazgo WHERE hallazgoID=?', [halazgoID])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
+              .catch(e => console.log(JSON.stringify(e)));
                db.executeSql('DELETE FROM imagenes_table WHERE hallazgoID=?', [halazgoID])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
+              .catch(e => console.log(JSON.stringify(e)));
               
           })
-          .catch(e => alert(JSON.stringify(e)));
+          .catch(e => console.log(JSON.stringify(e)));
     
       }
     )}
 
 
 
-    get_hallazgos(observadorID) {
+    get_hallazgos(observadorID,plataformaID) {
       let eventos = [];
      return new Promise((resolve, reject) => {
        this.sqlite.create({
@@ -112,14 +112,14 @@ export class HallazgosService {
          .then((db: SQLiteObject) => {
            db.executeSql('CREATE TABLE IF NOT EXISTS Eventos92(idEvento INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER,tipo_evento TEXT,area TEXT, areaID INTEGER,subarea TEXT, subareaID INTEGER, whoID INTEGER)', [])
              .then(() => console.log('Executed SQL'))
-             .catch(e => alert(JSON.stringify(e)));
+             .catch(e => console.log(JSON.stringify(e)));
 
              db.executeSql('CREATE TABLE IF NOT EXISTS nuevo_hallazgo(hallazgoID INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER, areaID INTEGER,tipo_hallazgoID TEXT,tipo_implementacionID INTEGER,descripcion TEXT,observadorID INTEGER,idEvento INTEGER, latitude TEXT,longitude TEXT, FOREIGN KEY(idEvento) REFERENCES Eventos92 (idEvento))', [])
              .then(res => console.log('BIEN')).catch(e => console.log(JSON.stringify(e)));
              db.executeSql('CREATE TABLE IF NOT EXISTS imagenes_table(rowid INTEGER PRIMARY KEY, imagen TEXT,imagen_mini TEXT,  fecha TEXT, hallazgoID INTEGER, FOREIGN KEY(hallazgoID) REFERENCES nuevo_hallazgo (hallazgoID))', [])
               .then(() => console.log('Executed SQL'))
-              .catch(e => alert(JSON.stringify(e)));
-             db.executeSql('SELECT h.idEvento, h.hallazgoID,tipo_eventoID,h.fecha,areaID,tipo_hallazgoID,descripcion,tipo_implementacionID,i.imagen,h.observadorID, h.latitude,h.longitude FROM nuevo_hallazgo h LEFT JOIN (select hallazgoID,min(rowid) rowid FROM imagenes_table group by hallazgoID) i0 ON h.hallazgoID=i0.hallazgoID LEFT JOIN imagenes_table i ON i.rowid=i0.rowid', [])
+              .catch(e => console.log(JSON.stringify(e)));
+             db.executeSql('SELECT h.idEvento, h.hallazgoID,tipo_eventoID,h.fecha,areaID,tipo_hallazgoID,descripcion,tipo_implementacionID,i.imagen,h.observadorID, h.latitude,h.longitude FROM nuevo_hallazgo h LEFT JOIN (select hallazgoID,min(rowid) rowid FROM imagenes_table group by hallazgoID) i0 ON h.hallazgoID=i0.hallazgoID LEFT JOIN imagenes_table i ON i.rowid=i0.rowid WHERE observadorID=?', [observadorID])
              .then((res) => {
             
                for (let i = 0; i < res.rows.length; i++) {

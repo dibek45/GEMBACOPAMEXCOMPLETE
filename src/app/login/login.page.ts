@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginPage {
   username:string;
   validacion=true;
+  loading:boolean;
 
 
 
@@ -44,7 +45,7 @@ await this.storage.get('who').then(async (who) => {
     if(usuario!=null)
     await this.storage.get('where').then((where) => {
       if(where!=null)
-      this.router.navigate(['/plataforma/',{who: who,where: where,usuario:usuario}]);
+      this.router.navigate(['/plataforma/',{"whoID": who,"whereID": where,"usuario":usuario}]);
     })
   })
 })
@@ -52,15 +53,14 @@ await this.storage.get('who').then(async (who) => {
 
 logForm(form:NgForm){
       this._usuario.log_in(form.value.usuario,form.value.password).subscribe(data=>{
-        let user=data['Usuario']
+        let user=data['Usuario'];
                 this.storage.set('who', user[0].usuarioID);
                 this.storage.set('where', user[0].empresaID);   
                 this.storage.set('usuario', user[0].usuario);
-                this.router.navigate(['/plataforma/',{"who": user.usuarioID,"where": user.empresaID,"usuario":user.usuario}]);
-   
+                this.router.navigate(['/plataforma/',{"whoID": user[0].usuarioID,"whereID": user[0].empresaID,"usuario":user[0].usuario}]);
       },
       err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
     }
 }

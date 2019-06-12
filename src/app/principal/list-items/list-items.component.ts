@@ -17,12 +17,14 @@ export class ListItemsComponent implements OnInit {
 @Input() relevante:boolean;
 @Input() plataformaID:number;
 @Input() usuario:string;
+@Input() whereID:number;
+@Input() whoID:number;
+p;
 
 @Output() location= new EventEmitter();
 hallazgos;
 coordinates: { latitude: number; longitude: number; };
-  whoID: Number;
-  whereID: any;
+
   
   constructor(private storage:Storage,private _toast:ToastService,private _location:LocationService, private router:Router,private _hallazgo:HallazgosService) { 
     this.hallazgos=new Array<Hallazgo>();
@@ -48,13 +50,13 @@ coordinates: { latitude: number; longitude: number; };
       this.hallazgos=res['hallazgos'];
     },
     (err)=>{
-      alert(JSON.stringify(err))
+      console.log(JSON.stringify(err))
     })
   }
 
 
   ngOnChanges(changes: SimpleChanges) {
-   // alert(this.relevante)
+   // console.log(this.relevante)
     let reciente=1;
     if (!this.relevante) {
       reciente=1;
@@ -72,7 +74,7 @@ coordinates: { latitude: number; longitude: number; };
   async obtenerMapa(hallazgo:any) {
     await this.getLocatizacion();
     if (this.coordinates) {
-      await this.router.navigate(['/map',{"hallazgoID":hallazgo.hallazgoID,"latitude":hallazgo.latitude,"longitude":hallazgo.longitude,"latUbi":this.coordinates.latitude,"lonUbi":this.coordinates.longitude,"plataformaID":this.plataformaID,"usuario":this.usuario}]);
+      await this.router.navigate(['/map',{"hallazgoID":hallazgo.hallazgoID,"latitude":hallazgo.latitude,"longitude":hallazgo.longitude,"latUbi":this.coordinates.latitude,"lonUbi":this.coordinates.longitude,"plataformaID":this.plataformaID,"usuario":this.usuario, "whereID":this.whereID,"whoID":this.whoID}]);
     }else
     await this._toast.presentToast("No fue posible obtener la localizacion intente nuevamente",'warning');
   }
@@ -91,6 +93,6 @@ coordinates: { latitude: number; longitude: number; };
    }
 
    async obtenerHallazgo(hallazgo:any) {
-    this.router.navigate(['/hallazgo-complete',{"hallazgoID":hallazgo.hallazgoID,"plataformaID":this.plataformaID,"usuario":this.usuario}]);
+    this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":hallazgo.hallazgoID}]);
   }
 }
