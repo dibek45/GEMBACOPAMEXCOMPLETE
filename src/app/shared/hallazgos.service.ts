@@ -369,7 +369,7 @@ await alert.present();
   insert_hallazgoHttp(eventoID:number,fecha:string,areaID:number,subareaID:number,tipo_hallazgoID:number,tipo_implementacionID:number,
     descripcion:string,observadorID:number,latitude:string,longitude:string) {
   
-    const endPoint=`${environment.apiBaseUrl}/hallazgo`;
+    const endPoint=`http://10.11.1.8:81/api/hallazgo`;
 
     return this.http.post(endPoint,{"eventoID":eventoID,"areaID": areaID,"fecha": fecha,"responsableID": 0,
                       "tipo_hallazgoID": tipo_hallazgoID,"tipo_implementacionID": tipo_implementacionID,
@@ -379,12 +379,12 @@ await alert.present();
         }
 
     putStateHallazgoHttp(hallazgoID:Number,stateID) {
-          const endPoint=`${environment.apiBaseUrl}/hallazgoState/${hallazgoID}/${stateID}`;
+          const endPoint=`http://10.11.1.8:81/api/hallazgoState/${hallazgoID}/${stateID}`;
           return this.http.put(endPoint,{});
         }
 
     putComentarioHallazgoHttp(hallazgoID:Number,comentario:String) {
-          const endPoint=`${environment.apiBaseUrl}/hallazgoComentario/${hallazgoID}/${comentario}`;
+          const endPoint=`http://10.11.1.8:81/api/hallazgoComentario/${hallazgoID}/${comentario}`;
           return this.http.put(endPoint,{});
         }
 }
