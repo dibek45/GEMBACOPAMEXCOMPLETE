@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'hallazgos', loadChildren: './hallazgos/hallazgos.module#HallazgosPageModule', },
   { path: 'complete-information', loadChildren: './modal/complete-information/complete-information.module#CompleteInformationPageModule' },
   { path: 'principal', loadChildren: './principal/principal.module#PrincipalPageModule' },
-  { path: 'map', loadChildren: './map/map.module#MapPageModule' },
+ // { path: 'map', loadChildren: './map/map.module#MapPageModule' },
   { path: 'hallazgo-complete', loadChildren: './hallazgo-complete/hallazgo-complete.module#HallazgoCompletePageModule' },
   { path: 'imagen-modal', loadChildren: './imagen-modal/imagen-modal.module#ImagenModalPageModule' },
   { path: 'plataforma', loadChildren: './plataforma/plataforma.module#PlataformaPageModule' }

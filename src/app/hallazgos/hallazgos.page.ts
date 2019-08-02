@@ -8,7 +8,7 @@ import {ListHallazgoComponent }from '../hallazgos/list-hallazgo/list-hallazgo.co
 import { ApplicationRef } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { LocationService } from '../shared/location.service';
+//import { LocationService } from '../shared/location2.service';
 import { DiseñoService } from '../shared/diseño.service';
 
 @Component({
@@ -33,8 +33,15 @@ export class HallazgosPage implements OnInit {
   plataformaID: number;
   whereID: number;
   color="danger";
+  conexion: any;
+  banderaEdit:boolean=false;
+  banderaEditLocal: boolean;
 
-  constructor(private _diseño:DiseñoService, private _location:LocationService,private storage: Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef, private _toast:ToastService,private _hallazgo:HallazgosService,private router:Router,private route: ActivatedRoute,public platform: Platform,public alertController: AlertController) {
+  constructor(private _diseño:DiseñoService,private route: ActivatedRoute, 
+  //  private _location:LocationService,
+    private storage: Storage,private changeRef: ChangeDetectorRef,
+    private applicationRef : ApplicationRef, private _toast:ToastService,
+    private _hallazgo:HallazgosService,private router:Router,public platform: Platform,public alertController: AlertController) {
     this.height = platform.height() - 56;
 
     this.flag=false;
@@ -42,6 +49,8 @@ export class HallazgosPage implements OnInit {
 
     })
    }
+
+   /*
    async getLocatizacion(){
     await this._location.getPosition().subscribe(
       (pos: Position) => {
@@ -51,11 +60,11 @@ export class HallazgosPage implements OnInit {
           };
       });
     //  await console.log(JSON.stringify(this.coordinates))
-   }
+   }*///
 
    back(){
      if (this.show=="lista") {
-      this.router.navigate(['/plataforma',{"usuario":this.usuario,"whoID":this.whoID,"whereID":this.whereID}]);
+      this.router.navigate(['/plataforma',{"plataformaID":this.plataformaID,"usuario":this.usuario,"whoID":this.whoID,"whereID":this.whereID,}]);
     }else
      if (this.show=="hallazgo") {
       this.show="lista";
@@ -64,96 +73,34 @@ export class HallazgosPage implements OnInit {
    }
 
   ngOnInit() {
-
-  this.getLocatizacion();
+      this.hacerPing();
+      this.route.params.subscribe(params => {
+      this.plataformaID =params['plataformaID'];
+      this.usuario =params['usuario'];
+      this.whereID =params['whereID'];
+      this.whoID =params['whoID'];
+  });
     this.show="lista";
   }
 
   ngOnChange() {
-   
+  
   }
   ionViewDidEnter() {
-    this.storage.get('who').then((val) => {
-      this.whoID=val;
-    });
-    this.storage.get('where').then((val) => {
-      console.log('Where:'+ val);
-    });
+  
+  }
 
-    this.route.params.subscribe(async params => {
-      this.plataformaID = +params['plataformaID']; 
-      this.usuario =params['usuario'];
-      this.whereID =params['whereID'];
-     await this._diseño.getColorMenu(this.plataformaID).then(res=>{
-        this.color=JSON.stringify(res);
 
-      })
-  });
+
  
-  }
-
-  getData(id:number) {
-
-    this.hallazgos=[];
-      this._hallazgo.get_hallazgos(this.whoID,this.plataformaID).then((result) => {
-        this.hallazgos = <Array<Object>> result;
-    }, (error) => {
-        console.log("ERROR: "+JSON.stringify(error));
-    });
-  }
-
-  async presentAlertPromptDescription() {
-    this._hallazgo.alert_descripcion().then(res=>{
-      let result:string;
-      result=JSON.stringify(res);
-      this.arreglo.descripcion=result;
-      this.alertTipoRadio();
-
-    })
-
-  }
-  async alertTipoRadio() {
-   this._hallazgo.alert_radio().then(res=>{
-     this.arreglo.tipoID=parseInt(JSON.stringify(res));
-     this.alertTipoImplementacion();
-   })
-  }
-
-  async alertTipoImplementacion() {
-    await this._hallazgo.alert_tipo_implementacion().then(res=>{
-    this.arreglo.implementacionID=parseInt(JSON.stringify(res));
-    this.arreglo.idEvento=this.id_evento;
-    })
-    await this.nuevo_hallazgo();
-  }
-  
-   async nuevo_hallazgo(){
-     await this.getLocatizacion();
-  
-     if (this.coordinates) {
-      await this._hallazgo.postHallazgos(this.arreglo,this.whoID,String(this.coordinates.latitude),String(this.coordinates.longitude)).then(res=>{
-        this._toast.presentToast("Hallazgo agregado y localizacion",'success');
-        })
-     }else{
-      await this._hallazgo.postHallazgos(this.arreglo,this.whoID,null,null).then(res=>{
-        this._toast.presentToast("Hallazgo agregado sin localizacion",'warning');
-        })
-
-     }
-
-      this.flag=true;
-
-   }
+ 
+ 
 
    itemHallasgo(id:number):void{
     this.parentID=id;
     this.show="hallazgo";
+    this.banderaEditLocal=false;
     }
-
-
-
-
-  
 
     checarInfoHallazgo(event){
      this.infoEvento=event;
@@ -171,6 +118,29 @@ export class HallazgosPage implements OnInit {
     }
 
 
-    
+hacerPing(){
+  this,this.conexion=null;
+   this._hallazgo.pingHttp('').then(res=>{
+       if (this.conexion==null) {
+        this.conexion=true;
+        this._toast.presentToast('Estas conectado a red CPX','success','bottom');
+           return this.conexion;
+       }
+   });
+   setTimeout(() => {
+     if (this.conexion==null) {
+       this._toast.presentToastOpions('','Verifique su coneccion a red CPX','md-information-circle').then(res=>{
+         this.hacerPing();
+       });
+       this.conexion=false;
+       return this.conexion;
+   }},3000);
+}
   
+
+
+esconderMostrar(event){
+  this.banderaEditLocal=event;
+
+}
 }

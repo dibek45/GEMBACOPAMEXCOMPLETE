@@ -1,7 +1,7 @@
 
 
-<ion-segment scrollable color="primary" disabled>
+<ion-segment scrollable color="success" >
     <ion-segment-button [attr.checked]="item.id==avanceID"  *ngFor="let item of items">
-      <ion-icon name="{{item.icon}}"></ion-icon>{{item.name}}
+      <ion-icon name="{{item.icon}}"></ion-icon> <strong>  {{item.name}}</strong>
     </ion-segment-button>
   </ion-segment>

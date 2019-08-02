@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 
 import { IonicModule } from '@ionic/angular';
 
@@ -12,6 +13,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { MaxNombrePipe } from '../pipe/max-nombre.pipe';
 import { AgmCoreModule } from '@agm/core';
 import { AngularCollapseModule } from 'angular-collapse';
+import { ReactiveFormsModule} from '@angular/forms';
+import { MaxDescripcionPipe } from '../pipe/max-descripcion.pipe';
+
 
 
 const routes: Routes = [
@@ -29,9 +33,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule
   ],
-  declarations: [PrincipalPage,AsideFiltroComponent,ListItemsComponent,MaxNombrePipe],
+  declarations: [PrincipalPage,AsideFiltroComponent,ListItemsComponent,MaxNombrePipe,MaxDescripcionPipe],
   entryComponents: [],
 })
 export class PrincipalPageModule {}

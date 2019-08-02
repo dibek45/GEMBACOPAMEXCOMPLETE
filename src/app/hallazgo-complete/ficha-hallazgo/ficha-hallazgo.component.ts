@@ -14,8 +14,7 @@ export class FichaHallazgoComponent implements OnInit {
   ngOnInit() {}
 
   ngOnChanges(){
-  // console.log(JSON.stringify(this.hallazgo))
+  //console.log(JSON.stringify(this.hallazgo));
   }
-
 
 }

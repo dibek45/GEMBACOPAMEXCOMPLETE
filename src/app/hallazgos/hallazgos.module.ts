@@ -12,6 +12,17 @@ import { ScrollUpdateComponent } from '../components/scroll-update/scroll-update
 import { NewThingComponent } from '../components/new-thing/new-thing.component';
 import { AddInfoHallazgoComponent } from './add-info-hallazgo/add-info-hallazgo.component';
 import {  ReactiveFormsModule } from '@angular/forms';
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
+
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { EditarComponent } from './hallazgo-detalle/editar/editar.component';
+import { EditarComponentModal } from '../modals/editar/editar.component2';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
+
+
+
+
 
 
 const routes: Routes = [
@@ -24,13 +35,16 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    CanvasWhiteboardModule,
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    ScrollingModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [HallazgosPage,ListHallazgoComponent,HallazgoDetalleComponent,ScrollUpdateComponent,NewThingComponent,AddInfoHallazgoComponent],
-  entryComponents:[ListHallazgoComponent]
+  declarations: [EditarComponentModal,EditarComponent,HallazgosPage,ListHallazgoComponent,HallazgoDetalleComponent,ScrollUpdateComponent,NewThingComponent,AddInfoHallazgoComponent],
+  providers:[ScreenOrientation],
+  entryComponents:[ListHallazgoComponent,EditarComponentModal,EditarComponent]
 })
 export class HallazgosPageModule {}

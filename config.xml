@@ -9,7 +9,7 @@
     <access origin="http://*.google.com" />
     <access origin="content:///*" />
     <access origin="*" />
-    <name>Gemba Copamex</name>
+    <name>LEAN MANUFACTURING</name>
     <description>Una app desarrollada por COPAMEX</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -94,5 +94,4 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-sqlite-storage" spec="3.2.0" />
     <plugin name="uk.co.workingedge.cordova.plugin.sqliteporter" spec="1.1.0" />
-    <engine name="android" spec="7.1.4" />
 </widget>

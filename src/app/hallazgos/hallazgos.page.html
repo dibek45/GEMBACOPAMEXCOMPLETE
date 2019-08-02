@@ -1,26 +1,23 @@
 <ion-header>
     <ion-toolbar color="tertiary">
-        <ion-buttons slot="start" size="large" (click)="back()">
-            <ion-icon name="arrow-back" size="large">Regresar</ion-icon>
+        <ion-buttons slot="start" size="large" (click)="back()" *ngIf="show==='lista'">
+           <ion-icon name="home" size="large"></ion-icon> <label style="padding-top: 13px;">Home</label> 
         </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button>
-            <ion-icon slot="icon-only" name="contact"></ion-icon>
-            <ion-label class="usuario">{{usuario}}</ion-label>
+        
+      <ion-buttons slot="end">
+        <ion-button >
+            <ion-icon name="contact"></ion-icon>
+            {{usuario}}
           </ion-button>
-        </ion-buttons>
+      </ion-buttons>
       </ion-toolbar>
      
     
       <ion-toolbar color="tertiary">
-          <ion-buttons slot="end">
-            <ion-button (click)="go('hallazgos')">
-              Subir
-            </ion-button>
-          </ion-buttons>
+          
           <ion-buttons slot="end">
             <ion-button (click)="go('principal')" >
-              Buscar
+              Consultar
             </ion-button>
             <ion-button (click)="go('salir')">
                 Salir
@@ -29,17 +26,22 @@
       </ion-toolbar>
   </ion-header>
 
-<ion-content padding>
+  <ion-content padding center text-center class="no-scroll" class="background-image" >
+    <style>
+     .background-image{
+   --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
+    </style>
   
-    <ion-fab vertical="center" horizontal="end" slot="fixed" (click)="presentAlertPromptDescription()" *ngIf="show==='lista'">
-        <ion-fab-button>
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
  
-      <app-add-info-hallazgo  *ngIf="show==='lista'" (infoEvento)="checarInfoHallazgo($event)" [plataformaID]="plataformaID" [whereID]="whereID" [whoID]="whoID"></app-add-info-hallazgo>
 
+  <ion-fab id="success" vertical="center" horizontal="end" slot="fixed" (click)="back()" *ngIf="show==='hallazgo' && banderaEditLocal==false" color="success">
+        <ion-fab-button color="success">
+          <ion-icon name="md-checkmark"></ion-icon>
+        </ion-fab-button>
+  </ion-fab>
+ 
+  <app-add-info-hallazgo  *ngIf="show==='lista'" (infoEvento)="checarInfoHallazgo($event)" [plataformaID]="plataformaID" [whereID]="whereID" [whoID]="whoID"></app-add-info-hallazgo>
   <app-list-hallazgo (id_elemento)=itemHallasgo($event)  *ngIf="show==='lista'" [id_evento]="id_evento" [flag]="flag" [infoEvento]="infoEvento" [plataformaID]="plataformaID" [whoID]="whoID" [whereID]="whereID"></app-list-hallazgo>
-  <app-hallazgo-detalle [id_hallazgo]="parentID" *ngIf="show==='hallazgo'" ></app-hallazgo-detalle>
+  <app-hallazgo-detalle [id_hallazgo]="parentID" *ngIf="show==='hallazgo'" (banderaEdit)="esconderMostrar($event)"></app-hallazgo-detalle>
   
 </ion-content>

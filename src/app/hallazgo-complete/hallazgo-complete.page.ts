@@ -39,7 +39,9 @@ export class HallazgoCompletePage implements OnInit {
   whoID: number;
   color: string;
 
-  constructor(private _diseño:DiseñoService,private _toast:ToastService,private _hallazgo:HallazgosService,private storage: Storage,private _image :ImagenesService,private router:Router, private route: ActivatedRoute,private modalController: ModalController) { }
+  constructor(private _diseño:DiseñoService,private _toast:ToastService,private _hallazgo:HallazgosService,
+    private storage: Storage,private _image :ImagenesService,private router:Router, private route: ActivatedRoute,
+    private modalController: ModalController) { }
 
   ngOnInit() {
       this.cargar_usuario();
@@ -204,7 +206,7 @@ export class HallazgoCompletePage implements OnInit {
         //      console.log(JSON.stringify(res));
 
         this.router.navigateByUrl('/hallazgo-complete', {skipLocationChange: true}).then(()=>{
-          this._toast.presentToast("Hallazgo actualizado",'success');
+          this._toast.presentToast("Hallazgo actualizado",'success','bottom');
           this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":this.hallazgoID}]);
          
         })
@@ -223,7 +225,7 @@ export class HallazgoCompletePage implements OnInit {
         }
     }
     }else 
-    this._toast.presentToast("Escribe un comentario",'warning');
+    this._toast.presentToast("Escribe un comentario",'warning','bottom');
 
    
   }

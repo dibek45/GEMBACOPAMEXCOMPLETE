@@ -26,7 +26,7 @@ export class PlataformaPage implements OnInit {
 
 
   openPreview(plataforma){
-    this.router.navigate(['/principal/',{"plataformaID":plataforma,"usuario":this.usuario, "whereID":this.whereID, "whoID":this.whoID}]);
+    this.router.navigate(['/hallazgos/',{"plataformaID":plataforma,"usuario":this.usuario, "whereID":this.whereID, "whoID":this.whoID}]);
   }
 
   go(menu){

@@ -1,4 +1,8 @@
-<ion-icon name="options" (click)="changeFlag()" class="iconFilter"></ion-icon>
+<ion-item color="secondary" (click)="changeFlag()" >
+    <ion-label>
+      Mostrar/Esconder filtros
+    </ion-label>
+  </ion-item>
 
 <div *ngIf="filtroFlag">
 <div class="sidenav">
@@ -7,47 +11,78 @@
     <ion-icon name="close-circle" (click)="delete_filter(filter.tipo)"></ion-icon>
   </ion-chip>
   <p>
-    <ion-label> Ordenar hallazgos </ion-label>
-    <ion-select placeholder="Select One" (ionChange)="change()">
+      <ion-label> Total <strong class="total">{{total_hallazgos}}</strong> </ion-label>
+    
+    <p>Ordenar</p>
+    <ion-select placeholder="Select One" (ionChange)="change()" >
       <ion-select-option value="f" selected>Mas recientes</ion-select-option>
       <ion-select-option value="m">Menos recientes</ion-select-option>
     </ion-select>
-  </p>
-  <div *ngIf="!areaIsSelected"><p>Area</p> 
-    <ul  style="list-style-type:none;">
-      <li  *ngFor="let item of eventos; let i=index" class="item-list" (click)="add_filter(item,i,1)">{{item.nombre}}</li>
-    </ul>  
+
+  <div *ngIf="!areaIsSelected" >
+    <form [formGroup]="form" class="form-filter">
+      <div>
+             <ion-icon name="md-cube" class="icon-filter"  [color]="'medium'"></ion-icon>
+
+        <ion-select placeholder="Area"  (ionChange)="add_filter($event,0,1)" formControlName="area" [(ngModel)]="area" class="select-filter">
+            <ion-select-option *ngFor="let area of eventos; let i=index" [value]="area" class="item-list" >{{area.nombre}}</ion-select-option>
+          </ion-select>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!subAreaIsSelected && areaIsSelected">
+    <form [formGroup]="form" class="form-filter" >
+        
+        <ion-select  class="select-filter" placeholder="Selecciona subarea" (ionChange)="add_filter($event,0,7)" formControlName="subArea" [(ngModel)]="subArea">
+            <ion-select-option *ngFor="let subArea of subAreas; let i=index" [value]="subArea" class="item-list" >{{subArea.subarea}}</ion-select-option>
+        </ion-select>
+    </form>
   </div>
   
-  <div *ngIf="!avanceIsSelected"><p>Avance</p> 
-    <ul style="list-style-type:none;">
-      <li *ngFor="let item of busqueda.avance; let i=index"  class="item-list" (click)="add_filter(item,i,2)">{{item.nombre}}</li>
-    </ul>  
+  <div *ngIf="!avanceIsSelected">
+    <form [formGroup]="form" class="form-filter">
+        <ion-icon name="trending-up" class="icon-filter"  [color]="'medium'"></ion-icon>
+        <ion-select class="select-filter"  placeholder="Avance"  (ionChange)="add_filter($event,0,2)" formControlName="avance"  [(ngModel)]="avance">
+            <ion-select-option *ngFor="let avance of busqueda.avance; let i=index" [value]="avance" class="item-list" >{{avance.nombre}}</ion-select-option>
+            </ion-select>
+    </form> 
   </div>
 
-  <div *ngIf="!responsableIsSelected"><p>Responsable</p> 
-    <ul  style="list-style-type:none;">
-      <li  *ngFor="let item of responsables let i=index" class="item-list" (click)="add_filter(item,i,3)">{{item.nombre}}</li>
-    </ul>  
+  <div *ngIf="!responsableIsSelected"> 
+    <form [formGroup]="form" class="form-filter">
+        <ion-icon name="person" class="icon-filter"  [color]="'medium'"></ion-icon>
+        <ion-select  class="select-filter" placeholder="Responsable"  (ionChange)="add_filter($event,0,3)" formControlName="responsable" [(ngModel)]="responsable">
+            <ion-select-option *ngFor="let responsable of responsables let i=index" [value]="responsable" class="item-list" >{{responsable.nombre}}</ion-select-option>
+          </ion-select>
+    </form>  
   </div>
   
-  <div *ngIf="!tipoHallazgoIsSelected"><p>Tipo</p> 
-    <ul  style="list-style-type:none;">
-      <li *ngFor="let item of busqueda.tipo_hallazgo; let i=index" class="item-list" (click)="add_filter(item,i,6)">{{item.nombre}}</li>
-    </ul>  
+  <div *ngIf="!tipoHallazgoIsSelected">
+    <form [formGroup]="form" class="form-filter">
+        <ion-icon name="medical" class="icon-filter"  [color]="'medium'"></ion-icon>
+        <ion-select class="select-filter" placeholder="Tipo"  (ionChange)="add_filter($event,0,6)" formControlName="tipo" [(ngModel)]="tipo">
+            <ion-select-option *ngFor="let tipo of busqueda.tipo_hallazgo; let i=index" [value]="tipo" class="item-list" >{{tipo.nombre}}</ion-select-option>
+          </ion-select>
+    </form>  
   </div>
 
-  <div *ngIf="!tipoIsSelected"><p>Tipo imp</p> 
-    <ul  style="list-style-type:none;">
-      <li *ngFor="let item of busqueda.tipo; let i=index" class="item-list" (click)="add_filter(item,i,4)">{{item.nombre}}</li>
-    </ul>  
+  <div *ngIf="!anoIsSelected"> 
+    <form [formGroup]="form" class="form-filter">
+        <ion-icon name="calendar" class="icon-filter"  [color]="'medium'"></ion-icon>
+        <ion-select class="select-filter" placeholder="Año"  (ionChange)="add_filter($event,0,5)" formControlName="ano" [(ngModel)]="ano">
+            <ion-select-option *ngFor="let ano of busqueda.ano; let i=index" [value]="ano" class="item-list" >{{ano.nombre}}</ion-select-option>
+          </ion-select>
+    </form>  
   </div>
 
-  <div *ngIf="!anoIsSelected"><p>Año</p> 
-    <ul  style="list-style-type:none;">
-      <li  *ngFor="let item of busqueda.ano; let i=index" class="item-list" (click)="add_filter(item,i,5)">{{item.nombre}}</li>
-    </ul>  
+  <div *ngIf="!mesIsSelected">
+    <form [formGroup]="form" class="form-filter">
+        <ion-icon name="calendar" class="icon-filter"  [color]="'medium'"></ion-icon>
+        <ion-select class="select-filter" placeholder="Mes"  (ionChange)="add_filter($event,0,8)" formControlName="mes" [(ngModel)]="mes">
+            <ion-select-option *ngFor="let mes of busqueda.mes; let i=index" [value]="mes" class="item-list" >{{mes.nombre}}</ion-select-option>
+          </ion-select>
+    </form>  
   </div>
 </div>
 </div>
-

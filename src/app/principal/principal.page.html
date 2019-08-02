@@ -1,37 +1,41 @@
 <ion-header>
     <ion-toolbar color="tertiary">
         <ion-buttons slot="start" size="large" (click)="back()">
-            <ion-icon name="arrow-back" size="large">Regresar</ion-icon>
+           <ion-icon name="home" size="large"></ion-icon> 
+           <label style="padding-top: 13px;">Home</label> 
         </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button>
-            <ion-icon slot="icon-only" name="contact"></ion-icon>
-            <ion-label class="usuario">{{usuario}}</ion-label>
+      <ion-buttons slot="end">
+        <ion-button >
+            <ion-icon name="contact"></ion-icon>
+            {{usuario}}
           </ion-button>
-        </ion-buttons>
+ 
+      </ion-buttons>
       </ion-toolbar>
      
-    
+
       <ion-toolbar color="tertiary">
+          <ion-searchbar  (change)="search($event)" placeholder="Buscar por ID" [(ngModel)]="searchQuery"></ion-searchbar>
+
           <ion-buttons slot="end">
             <ion-button (click)="go('hallazgos')">
-              Subir
+              Capturar
             </ion-button>
-          </ion-buttons>
+            </ion-buttons>
           <ion-buttons slot="end">
-            <ion-button (click)="go('principal')" >
-              Buscar
-            </ion-button>
             <ion-button (click)="go('salir')">
                 Salir
-              </ion-button>
+            </ion-button>
           </ion-buttons>
       </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  
-  <app-aside-filtro class="block" (boxBusqueda)="showBusqueda($event)" (masRelevanteFilter)="masRelevante($event)"></app-aside-filtro>
-  <app-list-items class="block" [busqueda]="busquedaAccion" [relevante]="relevante" [plataformaID]="plataformaID"  [usuario]="usuario" [whoID]="whoID" [whereID]="whereID" (location)="getLocation($event)"></app-list-items>
+<ion-content padding center text-center class="no-scroll" class="background-image" >
+  <style>
+   .background-image{
+ --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
+  </style>
+  <app-aside-filtro class="block aside" (boxBusqueda)="showBusqueda($event)" (masRelevanteFilter)="masRelevante($event)" [total_hallazgos]="total_hallazgos"></app-aside-filtro>
+  <app-list-items class="block list" [busqueda]="busquedaAccion" [relevante]="relevante" [plataformaID]="plataformaID"  [usuario]="usuario" [whoID]="whoID" [whereID]="whereID" (location)="getLocation($event)" (total_hallazgos)="get_total($event)"></app-list-items>
 </ion-content>
 

@@ -10,7 +10,6 @@ import { ImagenModalPage } from './imagen-modal.page';
 const routes: Routes = [
   {
     path: '',
-    component: ImagenModalPage
   }
 ];
 
@@ -21,6 +20,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ImagenModalPage]
+  declarations: []
 })
 export class ImagenModalPageModule {}

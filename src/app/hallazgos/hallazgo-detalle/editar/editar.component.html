@@ -1,0 +1,28 @@
+
+
+<ion-fab id="success" vertical="center" horizontal="end" slot="fixed" (click)="saveCanvasData()"  color="warning" *ngIf="verBoton">
+    <ion-fab-button color="success">
+      <ion-icon name="md-checkbox"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
+
+
+<canvas-whiteboard #canvasWhiteboard
+[imageUrl]="image"
+[drawButtonClass]="'drawButtonClass'"
+[drawButtonText]="'Dibujar'"
+[clearButtonClass]="'clearButtonClass'"
+[clearButtonText]="'Limpiar'"
+[undoButtonEnabled]="true"
+[redoButtonText]="'Volver'"
+[colorPickerEnabled]="true"
+[saveDataButtonEnabled]="true"
+[lineWidth]="1"
+[strokeColor]="'rgb(77,161,221)'"
+[shouldDownloadDrawing]="true"
+(onBatchUpdate)="sendBatchUpdate($event)"
+(onClear)="onCanvasClear()"
+(onUndo)="onCanvasUndo($event)"
+(onSave)="saveImage($event)"
+>
+

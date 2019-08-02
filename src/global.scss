@@ -6,7 +6,6 @@
 @import '~@ionic/angular/css/display.css';
 @import '~@ionic/angular/css/padding.css';
 @import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
@@ -235,7 +234,7 @@ body {
   font-size: 8pt;
   float: right;
 }
-
+//review
 .container {
   display: flex;
   height: 200px;
@@ -282,3 +281,117 @@ img {
           }
       }
   }
+
+
+//review
+  $gray:        #8f8f8f;
+::placeholder { color: $gray; }
+@import  url(https://fonts.googleapis.com/css?family=Montserrat);
+
+// ボールのサイズ
+$width: 15px;
+$height: 15px;
+
+// バウンドの距離
+$bounce_height: 30px;
+
+body {
+  position: relative; 
+  width: 100%;
+  height: 100vh;
+  font-family: Montserrat;
+}
+
+.wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text {
+  color:white;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.bounceball {
+  position: relative;
+  display: inline-block;
+  height: 37px;
+  width: $width;
+  &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 0;
+    width: $width;
+    height: $height;
+    border-radius: 50%;
+    background-color: white;
+    transform-origin: 50%;
+    animation: bounce 500ms alternate infinite ease;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    top: $bounce_height;
+    height: 5px;
+    border-radius: 60px 60px 20px 20px;
+    transform: scaleX(2);
+  }
+  35% {
+    height: $height;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100vw;
+  transition: all .5s;
+}
+
+.modal p {
+  width: 60%;
+  height: 40%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.mostrar-modal {
+  display: none;
+}
+.mostrar-modal + label {
+  background: steelblue;
+  display: table;
+  margin: auto;
+  color: #fff;
+  line-height: 3;
+  padding: 0 1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.mostrar-modal + label:hover {
+  background: #38678f;
+}
+
+.mostrar-modal:checked ~ .modal {
+  top: 0;
+}

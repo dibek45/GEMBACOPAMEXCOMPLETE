@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-toolbar color="{{tertiary}}">
-        
-        <ion-buttons slot="end">
-          <ion-button>
-            <ion-icon slot="icon-only" name="contact"></ion-icon>
-            <ion-label class="usuario">{{usuario}}</ion-label>
+    
+    <ion-toolbar color="tertiary">
+      <ion-buttons slot="end">
+        <ion-button >
+            <ion-icon name="contact"></ion-icon>
+            {{usuario}}
           </ion-button>
-        </ion-buttons>
+      </ion-buttons>
       </ion-toolbar>
      
     
@@ -21,7 +21,11 @@
         </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding center text-center class="no-scroll" class="background-image" >
+  <style>
+   .background-image{
+ --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
+  </style>
   <ion-slides [pager]="true" class="spider">
     <ion-slide >
       <img src="../../assets/platforms/gw3.jpg" tappable (click)="openPreview(1)" style="width: 340px">

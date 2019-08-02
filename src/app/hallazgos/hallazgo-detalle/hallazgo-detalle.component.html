@@ -1,12 +1,25 @@
-<ion-button  (click)="getPicture(1)" *ngIf="num_imagen<2" size="large" >Camara<ion-icon name="md-camera" ></ion-icon></ion-button>
-<ion-button  (click)="getPicture(0)" *ngIf="num_imagen<2"  size="large">Galeria <ion-icon name="images"></ion-icon></ion-button>
 
 
-<ion-list>
-        <ion-item *ngFor="let item of imagenes">
-          <ion-thumbnail slot="start">
+<ion-button  (click)="getPicture(1)" *ngIf="num_imagen<2" expand="block" >Camara<ion-icon name="md-camera" ></ion-icon></ion-button>
+<ion-button  (click)="getPicture(0)" *ngIf="num_imagen<2" expand="block">Galeria <ion-icon name="images"></ion-icon></ion-button>
+
+<app-editar [image]="image" *ngIf="image" (base64Image)="saveCanvasData($event)" ></app-editar>
+
+
+<ion-list *ngFor="let item of imagenes">
+  <ion-item-sliding>
+        <ion-item>
+          <ion-thumbnail slot="start" (click)="getCurrentData(item)">
             <ion-img [src]="item.imagen"></ion-img>
+       
           </ion-thumbnail>
-          <ion-label>{{item.fecha| date:'medium'}}</ion-label>
+          <ion-label (click)="getCurrentData(item)">{{item.fecha| date:'medium'}}</ion-label>
         </ion-item>
-      </ion-list>
+        <ion-item-options>
+            <ion-item-option color="danger" (click)="deleteImage(item)">
+              <ion-icon slot="bottom" name="trash"></ion-icon>
+              Eliminar
+            </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+</ion-list>

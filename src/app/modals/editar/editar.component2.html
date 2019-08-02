@@ -1,0 +1,99 @@
+
+
+<form [formGroup]="todo"  >
+<div>
+    <ion-text color="primary">
+        <h2 style="text-align: center;">Actualizar hallazgo</h2>
+      </ion-text>
+</div>
+    <cdk-virtual-scroll-viewport  style="height: 500px" itemSize="90" >
+
+    <ion-list-header color="warning">
+       <h3> Descrición</h3>
+      </ion-list-header>
+  <ion-item>
+    <ion-input type="text"  name="descripcion" formControlName="descripcion"></ion-input>
+  </ion-item>
+ 
+  <ion-list>
+    <ion-radio-group  formControlName="tipo">
+      <ion-list-header color="warning">
+       <h3>Tipo hallazgo</h3> 
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>1ra selección</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>2da Orden</ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>3ra Limpieza</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Mejora</ion-label>
+        <ion-radio value="4"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Reparación</ion-label>
+        <ion-radio value="5"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Seguridad</ion-label>
+        <ion-radio value="6"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>4a Estandarización</ion-label>
+        <ion-radio value="7"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Capacitación</ion-label>
+        <ion-radio value="8"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Fuga prioridad alta</ion-label>
+        <ion-radio value="9"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Fuga prioridad baja</ion-label>
+        <ion-radio value="10"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+      <ion-radio-group formControlName="tipo_accion">
+          <ion-list-header color="warning">
+             <h3>Tipo acción</h3> 
+            </ion-list-header>
+    
+        <ion-item>
+          <ion-label >Acción</ion-label>
+          <ion-radio value="1"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Inversión</ion-label>
+          <ion-radio value="2"></ion-radio>
+        </ion-item>
+  
+      </ion-radio-group>
+    </ion-list>
+
+<ion-button expand="full" color="light"   (click)="cancel()" >Cancelar</ion-button>
+<ion-button expand="full" color="success" (click)="update()" >Actualizar datos</ion-button>
+</cdk-virtual-scroll-viewport>
+</form>

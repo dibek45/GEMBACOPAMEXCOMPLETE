@@ -1,10 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter, ApplicationRef, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { HallazgosService } from 'src/app/shared/hallazgos.service';
 import { Storage } from '@ionic/storage';
-import { PopoverController, AlertController } from '@ionic/angular';
+import { PopoverController, AlertController, ModalController } from '@ionic/angular';
 import { ToastService } from 'src/app/shared/toast.service';
 import { ImagenesService } from 'src/app/shared/imagenes.service';
 import { Router } from '@angular/router';
+import { EditarComponentModal } from 'src/app/modals/editar/editar.component2';
+import { LoadingService } from 'src/app/shared/loading.service';
+import { EditarComponent } from '../hallazgo-detalle/editar/editar.component';
 
 
 @Component({
@@ -23,24 +26,31 @@ export class ListHallazgoComponent implements OnInit {
   @Input() whoID:number;
   eventos={};
   @Input() whereID:number;
-
   flagUpload:boolean;
   error:string="";
+  arreglo={tipoID:0,descripcion:"", implementacionID:0,idEvento:0};
+  conexion: boolean;
 
 
-  constructor(private router:Router,private _imagen:ImagenesService,private _toast:ToastService,public alertController: AlertController,private storage:Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef,private _hallazgo:HallazgosService) {
+  constructor(public popoverController: PopoverController,private _loading:LoadingService, private  modalController: ModalController,private  router:Router,private _imagen:ImagenesService,private _toast:ToastService,public alertController: AlertController,private storage:Storage,private changeRef: ChangeDetectorRef,private applicationRef : ApplicationRef,private _hallazgo:HallazgosService) {
    }
 
-  ngOnInit() {
-    this.traerEventos();
-  }
 
   getData(id:number):any {
-
       this._hallazgo.get_hallazgos(id,this.plataformaID).then((result) => {
-        this.hallazgos=  <Array<Object>> result;
-        this.changeRef.detectChanges();
-        return <Array<Object>> result;
+ //   alert(JSON.stringify(this.hallazgos))
+        this.hallazgos= result;
+    }, (error) => {
+        console.log("ERROR: get data"+JSON.stringify(error));
+    }); 
+  } 
+
+  
+  getDataX():any {
+      this._hallazgo.get_hallazgos(this.whoID,this.plataformaID).then((result) => {
+      //  alert(JSON.stringify(this.hallazgos))
+        this.hallazgos= result;
+       // this._toast.presentToast('Imagen guadada','success','bottom')
     }, (error) => {
         console.log("ERROR: get data"+JSON.stringify(error));
     }); 
@@ -49,15 +59,20 @@ export class ListHallazgoComponent implements OnInit {
   @Input() flag() {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-   
-    this.getData(this.whoID);
-    if (this.infoEvento.area!=null && this.infoEvento.subarea!=null ) {
-      this.flagUpload=true;
-    }else
-    this.flagUpload=false;
+  ngOnInit() {
+    this.getDataX()
+  }
+ 
 
-   
+  ngOnChanges(changes: SimpleChanges) { 
+    
+    if (this.infoEvento==undefined) {
+    }else{
+      if(this.infoEvento.area!=null && this.infoEvento.subarea!=null ) {
+        this.flagUpload=true;
+      }else
+        this.flagUpload=false;
+    } 
   }
 
   obtener_hallazgo(id:string):void{
@@ -66,9 +81,12 @@ export class ListHallazgoComponent implements OnInit {
 
   deleteHallazgo(id:number){
     this._hallazgo.delete_hallazgo(id).then(res=>{
-      this._toast.presentToast("Hallazgo borrado con exito",'success')
+      this.getDataX();
+      this.confirmarActualizar();
+    },
+    err=>{
+      alert(JSON.stringify(err))
     });
-    this.getData(this.whoID);
   }
 
   doRefresh(event){
@@ -85,61 +103,86 @@ export class ListHallazgoComponent implements OnInit {
       this.whereID=val;
 
     });
-      err=>{console.log(err)}
+    err=>{console.log('Error 88'+err)}
    
   }
 
-  async eventoExistente() {
+
+  async confirmarActualizar() {
     const alert = await this.alertController.create({
-      header: 'Evento existente',
-      subHeader: 'Subtitle',
-      message: 'Hay hallazos existentes deseas eliminarlos y volver a empezar',
-      buttons: ['Cancel', 'Open Modal', 'Delete']
+      header: 'Hallazgo guardado!',
+      message: ' <strong>Pulsa el boton para continuar</strong>!!!',
+      buttons: [
+       {
+          text: 'Continuar',
+          handler: () => {
+            this.getDataX();
+          }
+        }
+      ]
     });
 
     await alert.present();
   }
+  async eventoExistente() {
+      const alert = await this.alertController.create({
+        header: 'Evento existente',
+        subHeader: 'Subtitle',
+        message: 'Hay hallazos existentes deseas eliminarlos y volver a empezar',
+        buttons: ['Cancel', 'Open Modal', 'Delete']
+      });
+      await alert.present();
+  }
 
   async uploadHallazgo(hallazgoID){
-
-   this.subir_hallazgo(hallazgoID).then(res=>{
-     //console.log("llega aqui");
-    this.deleteHallazgo(hallazgoID);
-   },
-   err=>{
-     console.log(JSON.stringify(err))
-   })
+    this._hallazgo.pingHttp('').then(res=>{
+      this.subir_hallazgo(hallazgoID).then(res=>{
+        //console.log("llega aqui");
+      },
+      err=>{
+        alert("Error en subir hallazgo"+JSON.stringify(err))
+      })
+  },err=>{
+    alert(JSON.stringify(err)+' hay red cpx verfica conexion (error 400)')
+  });
+   if (this.conexion==false) {
+     this.hacerPing();
+   }else{
+  
+   }
     
- 
+    
   }
 
 async subir_hallazgo(hallazgoID){
-  
+  this._loading.presentLoading("Subiendo",3500);
       return await new Promise(async (resolve, reject) => {
         let scope=this;
       if (!this.flagUpload) {
-        this._toast.presentToast("Debes de llenar los datos del evento",'warning');
+        this._toast.presentToast("Debes de llenar los datos del evento",'warning','bottom');
       }else{
         await this._hallazgo.get_hallazgoLocalByID(hallazgoID).then((res:{ fecha: string,tipo_hallazgoID:number,tipo_implementacionID:number,descripcion:string,observadorID:number,latitude:string,longitude:string})=>{
-        this._hallazgo.insert_hallazgoHttp(this.infoEvento.evento,res.fecha,this.infoEvento.area,this.infoEvento.subarea,res.tipo_hallazgoID,res.tipo_implementacionID,res.descripcion,res.observadorID,res.latitude,res.longitude).subscribe((data:{result:any})=>{
+        this._hallazgo.insert_hallazgoHttp(this.infoEvento.evento,res.fecha,this.infoEvento.area,this.infoEvento.subarea,res.tipo_hallazgoID,res.tipo_implementacionID,res.descripcion,res.observadorID,res.latitude,res.longitude).subscribe(async (data:{result:any})=>{
                           
-                        scope._imagen.get_ImagenesHallazgos(hallazgoID).then((res:{length:any,imagen:any})=>{
+                  await scope._imagen.get_ImagenesHallazgos(hallazgoID).then((res:{length:any,imagen:any})=>{
                                 for(var i=0; i<res.length; i++) {
                                     let base64Img=res[i].imagen.substring(23);
                                     scope.b64resize(res[i].imagen,200).then(async values=>{
                                             let valor=String(values);                               
                                               await scope._imagen.insert_imagenHttp(data[0].response,base64Img,valor.substring(23)).subscribe(res=>{
-                                            },
+                                                this.deleteHallazgo(hallazgoID);
+                                                // alert(JSON.stringify('Hallazgo enviado a servidor'))
+                                                this._toast.presentToast("hallazgo guardado","success",'bottom');
+                                              },
                                             err=>{
                                               this.error="entra a err"+JSON.stringify(err);
-                                              reject(JSON.stringify(err))
+                                              this._toast.presentToast("Error al subir","warning",'bottom');
+                                              console.log(JSON.stringify(err));
                                             });
                                       });                                       
                               }
-                              resolve(JSON.stringify(res));
-
-                            })
-                            this._toast.presentToast("hallazgo guardado","success");
+                        resolve("bien");
+                      })
           })
         },
         err=>{
@@ -184,12 +227,70 @@ async subir_hallazgo(hallazgoID){
       }, false);
       image.src = URI;
     });
-  
   }
   
+  async openModal(hallazgoID:number) {
+    const modal = await this.modalController.create({
+      component: EditarComponentModal,
+      componentProps: {
+        "hallazgoID":hallazgoID
+      }
+    });
+ 
+    modal.onDidDismiss().then((dataReturned) => {
+      this.getData(hallazgoID)
+      if (dataReturned !== null) {
+         //alert(dataReturned.data);
+        //alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+    return await modal.present();
+  }
 
-  irDetalle(hallazgoID){
-    console.log("entra aqui "+this.whereID)
-    this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID}]);
+  async presentAlertPromptDescription() {
+    this._hallazgo.alert_descripcion().then(res=>{
+      let result:string;
+      result=JSON.stringify(res);
+      this.arreglo.descripcion=result;
+      this.alertTipoRadio();
+
+    })
+
   }
+  async alertTipoRadio() {
+   this._hallazgo.alert_radio().then(res=>{
+     this.arreglo.tipoID=parseInt(JSON.stringify(res));
+     this.alertTipoImplementacion();
+   })
+  }
+
+  async alertTipoImplementacion() {
+    await this._hallazgo.alert_tipo_implementacion().then(res=>{
+    this.arreglo.implementacionID=parseInt(JSON.stringify(res));
+    this.arreglo.idEvento=this.id_evento;
+    })
+    await this.nuevo_hallazgo();
+  }
+  
+   async nuevo_hallazgo(){
+      await this._hallazgo.postHallazgos(this.arreglo,this.whoID,null,null,this.plataformaID).then(res=>{
+          this._toast.presentToast("Hallazgo agregado",'success','bottom');
+          this.getDataX()
+        });
+   }
+
+ 
+   hacerPing(){
+    this.conexion=null;
+    
+     setTimeout(() => {
+       if (this.conexion==null){
+         this._toast.presentToastOpions('','Verifique su coneccion a red CPX','md-information-circle').then(res=>{
+           this.hacerPing();
+         })
+         this.conexion=false;
+         return this.conexion;
+     }},1000);
+ }
+   
 }

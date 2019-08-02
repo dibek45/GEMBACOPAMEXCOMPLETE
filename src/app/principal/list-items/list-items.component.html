@@ -4,7 +4,7 @@
                 <ion-item>
                     <div class="item-content" >
                         <span class="item-content-title break-word" style="white-space: pre-line;margin-left: 10px;" (click)="obtenerHallazgo(hallazgo)"> 
-                            {{hallazgo.descripcion}}
+                            {{hallazgo.descripcion | maxDescripcion}}
                         </span> 
                       <div>
                           <div class="item-datos-image">
@@ -18,11 +18,14 @@
                                         </tr>
                                         <tr>
                                           <td>
+                                              <span (click)="obtenerHallazgo(hallazgo)"><p><strong>ID:</strong> {{hallazgo.hallazgoID}}</p></span>
+                                              <span (click)="obtenerHallazgo(hallazgo)"><p><strong>Area:</strong> {{hallazgo.area}}</p></span>
+                                              <span (click)="obtenerHallazgo(hallazgo)"><p><strong>Sub Area:</strong> {{hallazgo.subarea}}</p></span>
                                               <span (click)="obtenerHallazgo(hallazgo)"><p><strong>Inicio:</strong> {{hallazgo.fecha_inicio| date:'short'}}</p></span>
-                                              <span><p><strong (click)="obtenerHallazgo(hallazgo)">Compomiso:</strong>{{hallazgo.fecha_compromiso|  date:'short'}}</p></span>
-                                              <span><p><strong>Dias:</strong>{{hallazgo.dias}}</p></span>
-                                              <span><p><strong>Avance:</strong> {{hallazgo.avance}} </p></span>
-                                              <span *ngIf="hallazgo.longitude" (click)="obtenerMapa(hallazgo)" style="cursor: pointer;"> <strong>Ver localizacion <ion-icon name="pin" style="color: #DF0101;"></ion-icon> </strong> </span>
+                                              <span (click)="obtenerHallazgo(hallazgo)"><p><strong (click)="obtenerHallazgo(hallazgo)">Compomiso:</strong>{{hallazgo.fecha_compromiso|  date:'short'}}</p></span>
+                                              <span (click)="obtenerHallazgo(hallazgo)"><p><strong>Dias:</strong>{{hallazgo.dias}}</p></span>
+                                              <span (click)="obtenerHallazgo(hallazgo)"><p><strong>Avance:</strong> {{hallazgo.avance}} </p></span>
+                                             <!-- <span *ngIf="hallazgo.longitude" (click)="obtenerMapa(hallazgo)" style="cursor: pointer;"> <strong>Ver localizacion <ion-icon name="pin" style="color: #DF0101;"></ion-icon> </strong> </span>-->
                                           </td>
                                         </tr>
                                       </table>  
@@ -38,8 +41,7 @@
                       </ion-chip>
                     </div>
                   </ion-item>
-           
-     
+
 </div>
 </ion-list>
 <div class="pagination"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>

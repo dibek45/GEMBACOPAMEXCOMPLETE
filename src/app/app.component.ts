@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { LoadingService } from './shared/loading.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class AppComponent {
   usuario:String;
 
   constructor(
+    private _loading:LoadingService,
     private router:Router,
     private storage: Storage,
     private platform: Platform,
@@ -31,6 +33,12 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this._loading.presentLoading("Cargando",1000).then((res)=>{
+        alert(JSON.stringify(res))
+      },
+      err=>{
+        alert(JSON.stringify(err))
+      });
       
     });
   }
@@ -45,8 +53,5 @@ export class AppComponent {
     this.storage.get('usuario').then((val) => {
       this.usuario=val;
     });
-    
-   
-
   }
 }

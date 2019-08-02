@@ -13,15 +13,15 @@ export class ImagenesService {
   constructor(private camera: Camera,private sqlite: SQLite, private http:HttpClient) { }
 
 
-    save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
+save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
     
     return new Promise((resolve, reject) => {
       let  myDate: String = new Date().toISOString();   
         this.sqlite.create({
-          name: 'data2.db',
+          name: 'data4.db',
           location: 'default'
         }).then((db: SQLiteObject) => {
-          db.executeSql('INSERT INTO imagenes_table VALUES(NULL,?,?,?,?)',[dataimagen,dataimagen,myDate,id_hallazgo])
+          db.executeSql('INSERT INTO imagen VALUES(NULL,?,?,?,?)',[dataimagen,dataimagen,myDate,id_hallazgo])
             .then(res => {
             resolve("se inserto bien")
             })
@@ -35,21 +35,58 @@ export class ImagenesService {
      }
   )}
 
+  update_imagen_camera(dataimagen:string,imageID:Number) {
+    
+    return new Promise((resolve, reject) => {
+      let  myDate: String = new Date().toISOString();   
+        this.sqlite.create({
+          name: 'data4.db',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
+          db.executeSql('UPDATE imagen SET imagen=? WHERE rowid=? ',[dataimagen,imageID])
+            .then(res => {
+            resolve("se actualizo bien");
+            })
+            .catch(e => {
+              reject("Mal")
+            });
+        }).catch(e => {
+          reject(JSON.stringify(e));
+          
+        });
+     }
+  )}
+
+  delete_imagen(imageID:Number) {
+    
+    return new Promise((resolve, reject) => {
+      let  myDate: String = new Date().toISOString();   
+        this.sqlite.create({
+          name: 'data4.db',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
+          db.executeSql('delete FROM imagen WHERE rowid=? ',[imageID])
+            .then(res => {
+              resolve("Imagen eliminada");
+            })
+            .catch(e => {
+              reject(e);
+            });
+        }).catch(e => {
+          reject(JSON.stringify(e));
+          
+        });
+     }
+  )}
+
   get_ImagenesHallazgos(id) {
     return new Promise((resolve, reject) => {
         this.sqlite.create({
-          name: 'data2.db',
+          name: 'data4.db',
           location: 'default'
         })
-          .then((db: SQLiteObject) => {
-            
-            db.executeSql('CREATE TABLE IF NOT EXISTS nuevo_hallazgo(hallazgoID INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER, areaID INTEGER,tipo_hallazgoID TEXT,tipo_implementacionID INTEGER,descripcion TEXT,observadorID INTEGER,idEvento INTEGER,latitude TEXT,longitude TEXT, FOREIGN KEY(idEvento) REFERENCES Eventos92 (idEvento))', [])
-            .then(res => console.log('BIEN')).catch(e => console.log(JSON.stringify(e)));
-            db.executeSql('CREATE TABLE IF NOT EXISTS imagenes_table(rowid INTEGER PRIMARY KEY, imagen TEXT,imagen_mini TEXT,  fecha TEXT, hallazgoID INTEGER, FOREIGN KEY(hallazgoID) REFERENCES nuevo_hallazgo (hallazgoID))', [])
-              .then(() => console.log('Executed SQL'))
-              .catch(e => console.log(JSON.stringify(e)));
-             
-              db.executeSql('SELECT * FROM imagenes_table WHERE hallazgoID=? ', [id])
+          .then((db: SQLiteObject) => {             
+              db.executeSql('SELECT * FROM imagen WHERE hallazgoID=? ', [id])
               .then((res) => {
                 let imagenes = [];
                 for(var i=0; i<res.rows.length; i++) {

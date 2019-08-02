@@ -9,6 +9,7 @@ import { HallazgoCompletePage } from './hallazgo-complete.page';
 import { AvanceComponent } from './avance/avance.component';
 import { ComentarioComponent } from './comentario/comentario.component';
 import { FichaHallazgoComponent } from './ficha-hallazgo/ficha-hallazgo.component';
+import { ImagenModalPage } from '../imagen-modal/imagen-modal.page';
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [HallazgoCompletePage,AvanceComponent,ComentarioComponent,FichaHallazgoComponent],
-  entryComponents:[]
+  declarations: [HallazgoCompletePage,AvanceComponent,ComentarioComponent,FichaHallazgoComponent,ImagenModalPage],
+  entryComponents:[ImagenModalPage]
 })
 export class HallazgoCompletePageModule {}

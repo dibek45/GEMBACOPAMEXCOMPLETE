@@ -4,8 +4,8 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+//import { Geolocation } from '@ionic-native/geolocation/ngx';
+//import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
@@ -19,12 +19,17 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import {Subject} from 'rxjs';
+import { AppPasswordDirective } from './app-password.directive';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AppPasswordDirective],
   entryComponents: [],
   
   imports: [
+    
     ReactiveFormsModule,
     NgxPaginationModule,
     FormsModule,
@@ -41,8 +46,8 @@ import {Subject} from 'rxjs';
   ],
 
   providers: [
-    NativeGeocoder,
-    Geolocation,
+    //NativeGeocoder,
+   // Geolocation,
     SQLite,
     SQLitePorter,
     StatusBar,

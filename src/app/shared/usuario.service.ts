@@ -12,9 +12,14 @@ export class UsuarioService {
 
   
   log_in(usuario:string,password:string) {
-
    // let endPoint= `${environment.apiBaseUrl}:81/login/${usuario}/`+encodeURIComponent(password);
    let endPoint= `http://10.11.1.8:81/api/usuario/${usuario}/`+encodeURIComponent(password);
     return this.http.get(endPoint,{});
    }
+
+  updateData(data) {
+    //let endPoint= `${environment.apiBaseUrl}:81/login/${usuario}/`+encodeURIComponent(password);
+    let endPoint= `http://10.11.1.8:81/api/usuario/${data.usuario}/`+encodeURIComponent(data.password1)+'/'+encodeURIComponent(data.password2)+'/'+encodeURIComponent(data.password3);
+     return this.http.put(endPoint,{});
+    }
 }
