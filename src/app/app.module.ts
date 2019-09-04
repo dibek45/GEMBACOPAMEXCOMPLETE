@@ -21,15 +21,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {Subject} from 'rxjs';
 import { AppPasswordDirective } from './app-password.directive';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-
+import { TipoAuditoriaPipe } from './pipe/tipo-auditoria.pipe';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [AppComponent, AppPasswordDirective],
   entryComponents: [],
-  
   imports: [
     
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     FormsModule,
@@ -46,6 +48,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   ],
 
   providers: [
+   {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
     //NativeGeocoder,
    // Geolocation,
     SQLite,

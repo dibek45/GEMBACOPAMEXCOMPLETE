@@ -36,6 +36,6 @@
  --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
   </style>
   <app-aside-filtro class="block aside" (boxBusqueda)="showBusqueda($event)" (masRelevanteFilter)="masRelevante($event)" [total_hallazgos]="total_hallazgos"></app-aside-filtro>
-  <app-list-items class="block list" [busqueda]="busquedaAccion" [relevante]="relevante" [plataformaID]="plataformaID"  [usuario]="usuario" [whoID]="whoID" [whereID]="whereID" (location)="getLocation($event)" (total_hallazgos)="get_total($event)"></app-list-items>
+  <app-list-items class="block list" [busqueda]="busquedaAccion" [relevante]="relevante" [plataformaID]="plataformaID"  [usuario]="usuario" [whoID]="whoID" [whereID]="whereID" [permiso]="permiso" (location)="getLocation($event)" (total_hallazgos)="get_total($event)"></app-list-items>
 </ion-content>
 

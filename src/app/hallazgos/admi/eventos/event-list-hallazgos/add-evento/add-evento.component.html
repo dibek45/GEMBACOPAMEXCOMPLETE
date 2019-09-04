@@ -1,0 +1,40 @@
+    <mat-toolbar>
+      <span>Crear evento</span>
+    </mat-toolbar>
+  
+<div>
+
+  <form>
+
+    <mat-form-field>
+      <mat-label>Area</mat-label>
+      <mat-select name="areaID" [(ngModel)]="areaID">
+        <mat-option *ngFor="let item of areas" [value]="item.id">
+          {{item.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+   
+  <mat-form-field style="display: block">
+    <input matInput [matDatepicker]="picker" placeholder="Elige fecha inicio" [value]="date.value" [(ngModel)]="inicio">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker2" placeholder="Elige una fecha final"  [value]="date.value" [(ngModel)]="fin">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<mat-form-field class="example-full-width">
+  <input matInput #message maxlength="256" placeholder="Comentarios" [(ngModel)]="comentarios">
+  <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+</mat-form-field>
+
+<div class="example-button-row">
+<button mat-raised-button style="margin: 4px; margin-bottom: 0px" (click)="onCancel()">Cancelar</button>
+<button  mat-raised-button	 color="primary"  class="btn-acept" (click)=" saveEvent()" >Aceptar</button>
+</div>

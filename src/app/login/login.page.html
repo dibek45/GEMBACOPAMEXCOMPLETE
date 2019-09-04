@@ -4,7 +4,7 @@
     --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
      </style>
 <div class="login-complete">
-<img src="../../assets/icon/user3.jpg" style="height: 160px;border-radius: 5%;width: 160px;margin: 10px;display: block; margin: auto;" >
+<img src="../../assets/icon/user3.jpg" style="height: 160px;border-radius: 5%;width: 160px;margin: 10px;display: block; margin: auto;    margin-bottom: 5px;" >
 
 <form class='login-form' #form="ngForm" (ngSubmit)="logForm(form)">
     <div class="flex-row"> 
@@ -28,7 +28,8 @@
     <input class='lf--submit' type='submit' value='Ingresar'>
   </form>
 </div>
-  <p class='lf--forgot' (click)="cambiar_pass()">Cambiar contraseña?</p>
- <p  class='lf--forgot'>version 1.4</p>
+<!-- <p class='lf--forgot' (click)="cambiar_pass()">Cambiar contraseña?</p>        -->
+  
+ <p class='lf--forgot'> <strong>Version 1.6</strong> </p>
 <strong style="color: red"> {{error}}</strong>
 </ion-content>

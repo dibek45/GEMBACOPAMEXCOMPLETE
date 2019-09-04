@@ -1,0 +1,15 @@
+.popover-content{
+        /* bottom: 5%; */
+        left: 5%;
+        width: 450px;
+        top: 5%;
+        transform-origin: right top;
+        text-align: center;
+}
+
+.pop-over-style {
+    .popover-content {
+        //width: 80% !important; - this wont work or the bottom one.
+        --width: 300px !important;
+    }
+}

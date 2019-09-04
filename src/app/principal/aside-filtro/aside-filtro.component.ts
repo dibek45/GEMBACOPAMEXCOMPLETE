@@ -21,7 +21,7 @@ export class AsideFiltroComponent implements OnInit {
   filtroFlag=true;
   busquedaAccion=new Array();
   masRevelante:boolean;
- 
+
     busqueda={
                      orden:[
                               {id:1,nombre:'Mas reciente'},
@@ -32,7 +32,6 @@ export class AsideFiltroComponent implements OnInit {
                             {id:3,nombre:'Terminado',tipo:2},
                             {id:4,nombre:'Cerrado',tipo:2}
                            ],
-                   
                       tipo:[{id:1,nombre:'Accion',tipo:4},
                             {id:2,nombre:'Inversion',tipo:4}
                           ],
@@ -186,9 +185,8 @@ this.esconderFiltro(type,item);
     }
     if(type==4){
       this.tipoIsSelected=true;
-      
       }
-    if(type==5){
+    if(type == 5) {
       this.anoIsSelected=true;
       this.ano=null;
     }
@@ -201,6 +199,7 @@ this.esconderFiltro(type,item);
     }
     if(type==8){
       this.mesIsSelected=true;
+      this.mes=null;
     }
 
     let segundoArray

@@ -1,0 +1,31 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>settings_applications</mat-icon>
+</button>
+<button mat-icon-button aria-label="Example icon-button with a menu" *ngIf="show!='zonaAuditada'"  (click)="onRegretShow()">
+    <mat-icon>undo</mat-icon>
+</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="optionsEvents">
+      <mat-icon>directions_walk</mat-icon>
+      <span>Eventos</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="optionsAreas">
+      <mat-icon>satellite</mat-icon>
+      <span>Area</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="optionsAreas">
+        <mat-icon>build</mat-icon>
+        <span>Configuracion</span>
+      </button>
+   
+  </mat-menu>
+
+  <mat-menu #optionsEvents="matMenu">
+      <button mat-menu-item ><mat-icon>add</mat-icon> <span>Crear</span> </button>
+      <button mat-menu-item ><mat-icon>search</mat-icon> <span>Buscar</span> </button> 
+  </mat-menu>
+
+  <mat-menu #optionsAreas="matMenu">
+      <button mat-menu-item (click)="onShow('crear-area')"><mat-icon >add</mat-icon> <span>Crear</span> </button>
+      <button mat-menu-item (click)="onShow('mostrar-area')"><mat-icon>search</mat-icon> <span>Buscar</span> </button>  
+  </mat-menu>

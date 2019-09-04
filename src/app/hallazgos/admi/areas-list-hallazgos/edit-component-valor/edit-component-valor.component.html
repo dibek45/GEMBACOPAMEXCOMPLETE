@@ -1,0 +1,11 @@
+
+<div>
+<mat-form-field class="example-full-width">
+<input matInput #message maxlength="256" placeholder="Nuevo valor" [(ngModel)]="valor">
+<mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+</mat-form-field>
+
+<div class="example-button-row">
+<button mat-raised-button style="margin: 4px; margin-bottom: 0px" (click)="onCancel()">Cancelar</button>
+<button  mat-raised-button	 color="primary"  class="btn-acept" (click)=" onButtonClicked()" [mat-dialog-close]="valor">Aceptar</button>
+</div>

@@ -34,14 +34,24 @@ export class AddInfoHallazgoComponent implements OnInit {
   ngOnInit() {
   }
 
+  refresh(){
+  
+    this._evento.getEventos(1,this.whereID,this.plataformaID).subscribe(res=>{
+      this.eventos=res['areas'];
+    this._toast.presentToast("Areas actualizadas",'primary','top')
+
+    },
+    err=>{
+      this._toast.presentToast("No esta conectado a la red CPX",'danger','top')
+      console.log(JSON.stringify(err));
+    });
+  }
 ngOnChanges(){
 
   this._evento.getEventos(1,this.whereID,this.plataformaID).subscribe(res=>{
     this.eventos=res['areas'];
-   // console.log(JSON.stringify(res));
-    //this._toast.presentToast("trae hallazgos",'danger','top')
-
-    
+   console.log(JSON.stringify(res));
+    //this._toast.presentToast("trae hallazgos",'danger','top');
   },
   err=>{
     this._toast.presentToast("No esta conectado a la red CPX",'danger','top')
@@ -51,16 +61,12 @@ ngOnChanges(){
 
 getarea(obj:any){
     this.infoEvento.emit({"area":this.form.value.areaID,"subarea":null})
-    this._evento.getSubArea(this.form.value.evento.areaID)
-    .subscribe(
-      (data) => {
+    this._evento.getSubArea(this.form.value.evento.areaID).subscribe((data) => {
         this.subareas = data['Areas'];
-       
       },
       (error) =>{
         alert(error);
-      }
-    )
+      })
   }
 
   getSubarea(event:Event){

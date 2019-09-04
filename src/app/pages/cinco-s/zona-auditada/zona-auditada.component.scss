@@ -1,0 +1,97 @@
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('../../../../assets/icon/5s.jpg');
+  background-size: cover;
+}
+
+mat-card img{
+  object-fit: cover; /*this makes de image in src fit to the size of specified below*/
+  width: 100%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+  height: 50%;
+}
+
+.downArrow{
+  position: fixed;
+  bottom: 50%;
+  color: #24d6ea;
+  font-family: none;
+  
+}
+.bounce {
+  -moz-animation: bounce 3s infinite;
+  -webkit-animation: bounce 3s infinite;
+  animation: bounce 3s infinite;
+}
+@-moz-keyframes bounce {
+0%, 20%, 50%, 80%, 100% {
+  -moz-transform: translateY(0);
+  transform: translateY(0);
+}
+40% {
+  -moz-transform: translateY(-30px);
+  transform: translateY(-30px);
+}
+60% {
+  -moz-transform: translateY(-15px);
+  transform: translateY(-15px);
+}
+}
+@-webkit-keyframes bounce {
+0%, 20%, 50%, 80%, 100% {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+40% {
+  -webkit-transform: translateY(-30px);
+  transform: translateY(-30px);
+}
+60% {
+  -webkit-transform: translateY(-15px);
+  transform: translateY(-15px);
+}
+}
+@keyframes bounce {
+0%, 20%, 50%, 80%, 100% {
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+40% {
+  -moz-transform: translateY(-30px);
+  -ms-transform: translateY(-30px);
+  -webkit-transform: translateY(-30px);
+  transform: translateY(-30px);
+}
+60% {
+  -moz-transform: translateY(-15px);
+  -ms-transform: translateY(-15px);
+  -webkit-transform: translateY(-15px);
+  transform: translateY(-15px);
+}
+}
+/* Demo Purpose Only*/
+.demo {
+font-family: 'Raleway', sans-serif;
+  color:#fff;
+  display: block;
+  margin: 0 auto;
+  padding: 15px 0;
+  text-align: center;
+}
+.demo a{
+font-family: 'Raleway', sans-serif;
+color: #2ecc71;		
+}
+
+ion-item{
+  margin: 0px;
+  padding: 0px;
+  border:0px;
+  
+
+
+}

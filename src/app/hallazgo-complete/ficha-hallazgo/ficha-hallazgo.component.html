@@ -1,39 +1,57 @@
-<ion-grid class="grid">
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Ficha tecnica
+        </mat-panel-title>
+        <mat-panel-description>
+           Informacion del hallazgo
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <ion-grid class="grid"> 
+          <button mat-flat-button color="primary" (click)="onCreate()" *ngIf="permiso==1">Area<mat-icon>repeat</mat-icon></button>
+          <ion-row>
+            <ion-col >
+            <strong>Area: </strong>{{hallazgo.area}}  
+            </ion-col>
+            <ion-col >
+                <strong>Sub Area: </strong>{{hallazgo.subarea}}  
+            </ion-col>
+            <ion-col >
+              <strong>Descripcion:</strong> {{hallazgo.descripcion}}
+            </ion-col>
+          </ion-row>
+                                                                                                                              
+          <ion-row >
+            <ion-col>
+            <strong> Inicio:</strong> {{hallazgo.fecha_inicio|date}}
+            </ion-col>
+            <ion-col >
+             <strong>Compromiso:</strong>
+            </ion-col>
+            <ion-col >
+            <strong>Dias:</strong> {{hallazgo.dias}}
+            </ion-col>
+          </ion-row>
+        
+          <ion-row >
+            <ion-col >
+              <strong>Tipo:</strong>  {{hallazgo.tipo}}
+            </ion-col>
+            <ion-col >
+              <strong> Observador: </strong>{{hallazgo.observador}}
+            </ion-col>
+            <ion-col>
+                <ion-col>
+                  <strong>Implementacion</strong> {{hallazgo.tipo_implementacion}}
+                </ion-col>
+            </ion-col>
+         
+          </ion-row>
+         
+        </ion-grid>
+    </mat-expansion-panel>
+  </mat-accordion>
 
-  <ion-row>
-    <ion-col >
-    <strong>Area:</strong>{{hallazgo.area}}
-    </ion-col>
-    <ion-col >
-      <strong>Descripcion:</strong> {{hallazgo.descripcion}}
-    </ion-col>
-    <ion-col>
-      <strong>Implementacion</strong> {{hallazgo.tipo_implementacion}}
-    </ion-col>
-  </ion-row>
-                                                                                                                      
-  <ion-row >
-    <ion-col>
-    <strong> Inicio:</strong> {{hallazgo.fecha_inicio}}
-    </ion-col>
-    <ion-col >
-     <strong>Compromiso:</strong>
-    </ion-col>
-    <ion-col >
-    <strong>Dias:</strong> {{hallazgo.dias}}
-    </ion-col>
-  </ion-row>
 
-  <ion-row >
-    <ion-col >
-      <strong>Tipo:</strong>  {{hallazgo.tipo}}
-    </ion-col>
-    <ion-col >
-      <strong> Observador: </strong>{{hallazgo.observador}}
-    </ion-col>
-    <ion-col>
-    </ion-col>
- 
-  </ion-row>
- 
-</ion-grid>

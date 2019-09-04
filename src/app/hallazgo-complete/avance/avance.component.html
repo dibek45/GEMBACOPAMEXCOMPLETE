@@ -1,7 +1,8 @@
-
-
-<ion-segment scrollable color="success" >
-    <ion-segment-button [attr.checked]="item.id==avanceID"  *ngFor="let item of items">
-      <ion-icon name="{{item.icon}}"></ion-icon> <strong>  {{item.name}}</strong>
-    </ion-segment-button>
-  </ion-segment>
+  <div style="margin:0 auto;">
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" value="{{avanceID}}"  >
+          <mat-button-toggle value="{{item.id}}" *ngFor="let item of items" [disabled]="1" (click)="changeStatus(item.id)">{{item.name}}       
+            <ion-icon name="{{item.icon}}"></ion-icon> 
+          </mat-button-toggle>
+      </mat-button-toggle-group>
+  </div>
+ 

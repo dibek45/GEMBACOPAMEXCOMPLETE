@@ -14,11 +14,25 @@ export class EventoService {
   getEventos(whoID:number,where:number,plataformaID:number) {return this.http.get(`http://10.11.1.8:81/api/area/${where}/${plataformaID}`);
   }
   
+  
   getArea(whoID:number,where:number) {return this.http.get(`http://10.11.1.8:81/api/areas/${where}`);
   }
 
-  getSubArea(eventoID:number) {
-    return this.http.get(`http://10.11.1.8:81/api/subArea/${eventoID}`);
+  getEventosAdmi(empresaID:number,plataformaID:number) {return this.http.get(`http://10.11.1.8:81/api/eventos/${empresaID}/${plataformaID}`);
+  }
+
+  postEventoAdmi(areaID:number,inicio:string,fin:string,comentarios:string) {return this.http.post(`http://10.11.1.8:81/api/eventos/`,{'areaID':areaID,'inicio':inicio, 'fin':fin,'comentarios':comentarios});
+  }
+
+  putEventoAdmi(areaID:number,inicio:string,fin:string,comentarios:string, eventoID:number) {return this.http.put(`http://10.11.1.8:81/api/eventos/`,{'areaID':areaID,'inicio':inicio, 'fin':fin,'comentarios':comentarios,'eventoID':eventoID});
+  }
+
+  deleteEventoAdmi(eventoID:number) {
+    return this.http.delete(`http://10.11.1.8:81/api/eventos/${eventoID}`);
+  }
+
+  getSubArea(areaID:number) {
+    return this.http.get(`http://10.11.1.8:81/api/subArea/${areaID}`);
   }
 
 

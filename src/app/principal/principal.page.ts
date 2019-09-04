@@ -36,9 +36,10 @@ export class PrincipalPage implements OnInit {
   color: string;
   searchQuery: any;
   conexion: any;
+  permiso: number;
 
   constructor(private _toast:ToastService,private _hallazgo: HallazgosService,private _diseño:DiseñoService,private storage: Storage,private router:Router,private route: ActivatedRoute) { }
-
+  
   ngOnInit() {
         this.hacerPing();
         this.route.params.subscribe(params => {
@@ -46,56 +47,55 @@ export class PrincipalPage implements OnInit {
         this.usuario =params['usuario'];
         this.whereID =params['whereID'];
         this.whoID =params['whoID'];
+        this.permiso =params['permiso'];
         this._diseño.getColorMenu(this.plataformaID).then(res=>{
           this.color=JSON.stringify(res);
-        })
+        });
 
     });
   }
-  
+
   showBusqueda(event:Event){
     this.busquedaAccion=event;
   }
 
-  masRelevante(event){
-    this.relevante=event;
+  masRelevante(event) {
+    this.relevante = event;
   }
 
-  getLocation(event){
-    
-   this.location=event;
+  getLocation(event) {
+   this.location = event;
   }
 
-  cerrarMapa(){
-    this.location=null;
+  cerrarMapa() {
+    this.location = null;
   }
 
-  back(){
-    this.router.navigate(['/plataforma',{"usuario":this.usuario,"whereID":this.whereID}]);
+  back() {
+    this.router.navigate(['/plataforma',{"usuario":this.usuario,"whereID":this.whereID,"whoID":this.whoID}]);
   }
 
-  go(menu){
-    
-    if (menu=='salir') {
+  go(menu) {
+    if (menu == 'salir') {
     this.storage.set('who', null);
     this.storage.set('where', null);
     this.storage.set('usuario', null);
-    this.router.navigate(['/login',]);
+    this.router.navigate(['/login']);
     }else
-    this.router.navigate([`/${menu}`,{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID,whoID:this.whoID}]);
+    this.router.navigate([`/${menu}`,{"permiso":this.permiso,"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID,whoID:this.whoID}]);
   }
 
-  search(hallazgoID:number){
-    this.searchQuery=parseInt(this.searchQuery);
+  search(hallazgoID: number) {
+    this.searchQuery = parseInt(this.searchQuery);
     this._hallazgo.getHallazgoByID_api(this.searchQuery).subscribe((res)=>{
-      if (res==undefined||res==null||res=="") {
+      if (res==undefined||res==null||res == "") {
         this._toast.presentToast('Hallazgo no encontrado', 'secundary','top');
       }else
-      this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":this.searchQuery}]);
+      this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":this.searchQuery,"permiso":this.permiso}]);
 },
-(err)=>{
+(err) => {
   alert(JSON.stringify(err));
-})
+});
   }
 
   get_total(event){

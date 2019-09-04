@@ -34,8 +34,8 @@
      .background-image{
    --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
     </style>
-<app-avance [hallazgoID]="hallazgoID" [avanceID]="avanceID"></app-avance>
-<app-ficha-hallazgo [hallazgo]="hallazgo"></app-ficha-hallazgo>
+<app-avance [hallazgoID]="hallazgoID" [avanceID]="avanceID" [permiso]="permiso" (updateStatus)="recargarPage($event)"></app-avance>
+<app-ficha-hallazgo [hallazgo]="hallazgo" [whereID]="whereID" [plataformaID]="plataformaID" [permiso]="permiso"></app-ficha-hallazgo>
 
        <ion-chip color="light">
         <ion-icon name="photos"></ion-icon>        

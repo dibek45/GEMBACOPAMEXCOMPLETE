@@ -9,7 +9,8 @@
   </ion-refresher>
  
 
- <ion-fab vertical="center" horizontal="end" slot="fixed" (click)="presentAlertPromptDescription()" >
+<ion-fab vertical="center" horizontal="end" slot="fixed" (click)="presentAlertPromptDescription()" style="margin-right: 10px;">
+   
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
@@ -49,7 +50,7 @@
           <ion-item-option  color="secondary" (click)="openModal(item.hallazgoID)">
               <ion-icon slot="bottom" name="md-create"></ion-icon>
               Actualizar
-            </ion-item-option>
+          </ion-item-option>
           <ion-item-option color="success" (click)="uploadHallazgo(item.hallazgoID)" *ngIf="item.imagen">
             <ion-icon slot="bottom" name="cloud-upload"></ion-icon>
             Subir

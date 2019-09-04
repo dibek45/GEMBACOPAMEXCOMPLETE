@@ -1,5 +1,7 @@
+
 <ion-header>
     <ion-toolbar color="tertiary">
+       
         <ion-buttons slot="start" size="large" (click)="back()" *ngIf="show==='lista'">
            <ion-icon name="home" size="large"></ion-icon> <label style="padding-top: 13px;">Home</label> 
         </ion-buttons>
@@ -14,7 +16,10 @@
      
     
       <ion-toolbar color="tertiary">
-          
+          <app-menu-hallazgos (modificarVista)="changeView($event)" [show]="show" *ngIf="permiso==1"></app-menu-hallazgos>
+          <button mat-icon-button aria-label="Example icon-button with a menu" *ngIf="show=='area' || show=='subarea' || show=='eventos'"  (click)="onRegretShow()">
+            <mat-icon>undo</mat-icon>
+        </button>
           <ion-buttons slot="end">
             <ion-button (click)="go('principal')" >
               Consultar
@@ -24,6 +29,12 @@
               </ion-button>
           </ion-buttons>
       </ion-toolbar>
+
+      <ion-toolbar color="tertiary">
+          
+        <app-add-info-hallazgo  (infoEvento)="checarInfoHallazgo($event)" [plataformaID]="plataformaID" [whereID]="whereID" [whoID]="whoID"></app-add-info-hallazgo>
+
+      </ion-toolbar>
   </ion-header>
 
   <ion-content padding center text-center class="no-scroll" class="background-image" >
@@ -31,17 +42,17 @@
      .background-image{
    --background: url(../assets/img/degradado.jpg) 0 0/100% 100% no-repeat;}
     </style>
-  
- 
-
   <ion-fab id="success" vertical="center" horizontal="end" slot="fixed" (click)="back()" *ngIf="show==='hallazgo' && banderaEditLocal==false" color="success">
         <ion-fab-button color="success">
           <ion-icon name="md-checkmark"></ion-icon>
         </ion-fab-button>
   </ion-fab>
  
-  <app-add-info-hallazgo  *ngIf="show==='lista'" (infoEvento)="checarInfoHallazgo($event)" [plataformaID]="plataformaID" [whereID]="whereID" [whoID]="whoID"></app-add-info-hallazgo>
   <app-list-hallazgo (id_elemento)=itemHallasgo($event)  *ngIf="show==='lista'" [id_evento]="id_evento" [flag]="flag" [infoEvento]="infoEvento" [plataformaID]="plataformaID" [whoID]="whoID" [whereID]="whereID"></app-list-hallazgo>
   <app-hallazgo-detalle [id_hallazgo]="parentID" *ngIf="show==='hallazgo'" (banderaEdit)="esconderMostrar($event)"></app-hallazgo-detalle>
   
+  <!--Admi-->
+  <app-areas-list-hallazgos *ngIf="show=='area'" [whereID]="whereID" (showSubArea)="showSubArea($event)"></app-areas-list-hallazgos>
+  <app-sub-areas-list-hallazgos *ngIf="show=='subarea'" [areaID]="areaID"></app-sub-areas-list-hallazgos>
+  <app-event-list-hallazgos  *ngIf="show=='eventos'" [whereID]="whereID" [plataformaID]="plataformaID" (showSubArea)="showSubArea($event)"></app-event-list-hallazgos>
 </ion-content>

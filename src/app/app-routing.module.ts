@@ -17,7 +17,8 @@ const routes: Routes = [
  // { path: 'map', loadChildren: './map/map.module#MapPageModule' },
   { path: 'hallazgo-complete', loadChildren: './hallazgo-complete/hallazgo-complete.module#HallazgoCompletePageModule' },
   { path: 'imagen-modal', loadChildren: './imagen-modal/imagen-modal.module#ImagenModalPageModule' },
-  { path: 'plataforma', loadChildren: './plataforma/plataforma.module#PlataformaPageModule' }
+  { path: 'plataforma', loadChildren: './plataforma/plataforma.module#PlataformaPageModule' },
+  { path: 'cinco-s', loadChildren: './pages/cinco-s/cinco-s.module#CincoSPageModule' }
 ];
 
 @NgModule({

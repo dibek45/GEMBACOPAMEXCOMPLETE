@@ -10,18 +10,18 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class ImagenesService {
 
-  constructor(private camera: Camera,private sqlite: SQLite, private http:HttpClient) { }
+  constructor(private camera: Camera, private sqlite: SQLite, private http: HttpClient) { }
 
 
-save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
+save_imagen_camera(dataimagen: string, id_hallazgo: Number) {
     
     return new Promise((resolve, reject) => {
       let  myDate: String = new Date().toISOString();   
-        this.sqlite.create({
+      this.sqlite.create({
           name: 'data4.db',
           location: 'default'
         }).then((db: SQLiteObject) => {
-          db.executeSql('INSERT INTO imagen VALUES(NULL,?,?,?,?)',[dataimagen,dataimagen,myDate,id_hallazgo])
+          db.executeSql('INSERT INTO imagen VALUES(NULL,?,?,?,?)', [dataimagen, dataimagen, myDate, id_hallazgo])
             .then(res => {
             resolve("se inserto bien")
             })
@@ -35,15 +35,15 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
      }
   )}
 
-  update_imagen_camera(dataimagen:string,imageID:Number) {
+  update_imagen_camera(dataimagen: string, imageID: Number) {
     
     return new Promise((resolve, reject) => {
       let  myDate: String = new Date().toISOString();   
-        this.sqlite.create({
+      this.sqlite.create({
           name: 'data4.db',
           location: 'default'
         }).then((db: SQLiteObject) => {
-          db.executeSql('UPDATE imagen SET imagen=? WHERE rowid=? ',[dataimagen,imageID])
+          db.executeSql('UPDATE imagen SET imagen=? WHERE rowid=? ', [dataimagen, imageID])
             .then(res => {
             resolve("se actualizo bien");
             })
@@ -57,15 +57,15 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
      }
   )}
 
-  delete_imagen(imageID:Number) {
+  delete_imagen(imageID: Number) {
     
     return new Promise((resolve, reject) => {
       let  myDate: String = new Date().toISOString();   
-        this.sqlite.create({
+      this.sqlite.create({
           name: 'data4.db',
           location: 'default'
         }).then((db: SQLiteObject) => {
-          db.executeSql('delete FROM imagen WHERE rowid=? ',[imageID])
+          db.executeSql('delete FROM imagen WHERE rowid=? ', [imageID])
             .then(res => {
               resolve("Imagen eliminada");
             })
@@ -89,10 +89,10 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
               db.executeSql('SELECT * FROM imagen WHERE hallazgoID=? ', [id])
               .then((res) => {
                 let imagenes = [];
-                for(var i=0; i<res.rows.length; i++) {
+                for (var i = 0; i < res.rows.length; i++) {
                   // console.log(res.rows.item(i).rowid);
                   let evidencia = res.rows.item(i).imagen;
-                  imagenes.push({rowid:res.rows.item(i).rowid,imagen:evidencia,fecha:res.rows.item(i).fecha})
+                  imagenes.push({rowid: res.rows.item(i).rowid, imagen: evidencia, fecha: res.rows.item(i).fecha})
                 }
                 resolve(imagenes);
                 
@@ -104,36 +104,36 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
       }
   )}
 
-  getImagesApi(hallazgoID:number,tipoID:number){
-    let endPoint=`http://10.11.1.8:81/api/evidencia/${hallazgoID}/${tipoID}`
+  getImagesApi(hallazgoID: number, tipoID: number){
+    let endPoint = `http://10.11.1.8:81/api/evidencia/${hallazgoID}/${tipoID}`
     return this.http.get(endPoint);
   }
 
 
-  insert_imagenHttp(hallazoID:number,imagen_normal:string,imagen_mini) {
-    const endPoint=`http://10.11.1.8:81/api/evidencia`;
+  insert_imagenHttp(hallazoID: number, imagen_normal: string, imagen_mini) {
+    const endPoint = `http://10.11.1.8:81/api/evidencia`;
   
-          return this.http.post(endPoint,{
+    return this.http.post(endPoint, {
           "hallazgoID": hallazoID, 
           "archivo": imagen_normal,  
           "tipo": 0,
-          "archivo_mini":imagen_mini      
+          "archivo_mini": imagen_mini      
           });
   }
   
-  insert_imagenHttpAfter(hallazoID:number,imagen_normal:string,imagen_mini) {
-    const endPoint=`http://10.11.1.8:81/api/evidencia`;
+  insert_imagenHttpAfter(hallazoID: number, imagen_normal: string, imagen_mini) {
+    const endPoint = `http://10.11.1.8:81/api/evidencia`;
   
-          return this.http.post(endPoint,{
+    return this.http.post(endPoint, {
           "hallazgoID": hallazoID, 
           "archivo": imagen_normal,  
           "tipo": 1,
-          "archivo_mini":imagen_mini      
+          "archivo_mini": imagen_mini      
           });
   }
 
 
-  getImageFileCamara(type:number) {
+  getImageFileCamara(type: number) {
     
     return new Promise((resolve, reject) => {
       const options: CameraOptions = {
@@ -142,7 +142,7 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         correctOrientation: true,
-        sourceType:type,
+        sourceType: type,
       }
   
       this.camera.getPicture(options).then((imageData) => {
@@ -154,13 +154,13 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
      }
   )}
 
-  b64resize(URI,maxSize) {
-    return new Promise((resolve, reject)=> {
+  b64resize(URI, maxSize) {
+    return new Promise((resolve, reject) => {
       if (URI == null) return reject();
-          var canvas = document.createElement('canvas'),
+      var canvas = document.createElement('canvas'),
           context = canvas.getContext('2d'),
           image = new Image();
-          image.addEventListener('load',()=> {
+      image.addEventListener('load', () => {
   
           canvas.width = image.width;
           canvas.height = image.height;
@@ -168,7 +168,7 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
           var width = image.width;
           var height = image.height;
   
-            if (width > height) {
+          if (width > height) {
                 if (width > maxSize) {
                     height *= maxSize / width;
                     width = maxSize;
@@ -189,4 +189,74 @@ save_imagen_camera(dataimagen:string,id_hallazgo:Number) {
     });
   
   }
+
+  get_evidencias5s(questionID) {
+      let evidencias = [];
+      return new Promise((resolve, reject) => {
+      this.sqlite.create({
+        name: 'data4.db',
+        location: 'default'
+      })
+        .then((db: SQLiteObject) => {            
+              db.executeSql('CREATE TABLE IF NOT EXISTS evidencia(evidenciaID INTEGER PRIMARY KEY, imagen TEXT,  fecha TEXT, questionID INTEGER, FOREIGN KEY(questionID) REFERENCES question107 (questionID))', [])
+              .then(() => console.log('Executed SQL'))
+              .catch(e => reject(JSON.stringify(e)));
+              db.executeSql('SELECT * FROM evidencia WHERE questionID=? ORDER BY questionID DESC', [questionID])
+            .then((res) => {
+              for (let i = 0; i < res.rows.length; i++) {
+                evidencias.push(res.rows.item(i));
+              }
+              resolve(evidencias);
+              })
+            .catch(e => reject(JSON.stringify(e)));
+        })
+        .catch(e => reject(JSON.stringify(e)));
+  
+    }
+  )}
+
+
+
+  save_imagen_camera5sLocal(dataimagen: string, preguntaID: number) {
+    return new Promise((resolve, reject) => {
+      let  myDate: String = new Date().toISOString();
+      this.sqlite.create({
+          name: 'data4.db',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
+          db.executeSql('INSERT INTO evidencia VALUES(NULL,?,?,?)', [dataimagen, myDate, preguntaID])
+            .then(res => {
+            resolve('se inserto bien');
+            })
+            .catch(e => {
+              reject('Mal');
+            });
+        }).catch(e => {
+          reject(JSON.stringify(e));
+        });
+     }
+  )}
+
+
+  delete_evidencia5s(evidenciaID: number) {
+    
+    return new Promise((resolve, reject) => {
+      let  myDate: String = new Date().toISOString();   
+      this.sqlite.create({
+          name: 'data4.db',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
+          db.executeSql('delete FROM evidencia WHERE evidenciaID=? ', [evidenciaID])
+            .then(res => {
+              resolve("Imagen eliminada");
+            })
+            .catch(e => {
+              reject(e);
+            });
+        }).catch(e => {
+          reject(JSON.stringify(e));
+          
+        });
+     }
+  )}
 }

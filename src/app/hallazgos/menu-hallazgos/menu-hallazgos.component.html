@@ -1,0 +1,26 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>settings_applications</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="optionsEvents">
+      <mat-icon>directions_walk</mat-icon>
+      <span>Eventos</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="optionsAreas">
+      <mat-icon>satellite</mat-icon>
+      <span>Area</span>
+    </button>
+   
+  </mat-menu>
+
+  <mat-menu #optionsEvents="matMenu">
+      <button mat-menu-item (click)="onShow('crear-evento')">Crear</button>
+      <button mat-menu-item (click)="onShow('mostrar-evento')">Buscar</button>
+  </mat-menu>
+
+  <mat-menu #optionsAreas="matMenu">
+      <button mat-menu-item  (click)="onShow('crear-area')">Crear</button>
+      <button mat-menu-item  (click)="onShow('mostrar-area')">Buscar</button>
+  </mat-menu>
+ 
+  

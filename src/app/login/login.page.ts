@@ -9,12 +9,15 @@ import { LoadingService } from '../shared/loading.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastService } from '../shared/toast.service';
 import { HallazgosService } from '../shared/hallazgos.service';
+// RxJS v6+
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
 })
+
 export class LoginPage {
   username:string;
   validacion=true;
@@ -41,17 +44,15 @@ export class LoginPage {
 ngOnInit() {
 
 }
+
   hideShowPassword() {
       this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
       this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
-
-
 async ionViewDidEnter() {
   this.hacerPing(); 
   this.lookForSession();
-
 }
 model={
   usuario:'',
@@ -59,9 +60,8 @@ model={
 }
 
 async lookForSession(){
-
+  this._loading.presentLoading('Cargando',2000);
   await this.storage.get('who').then(async (who) => {
-    
     if(who!=null){
         await this.storage.get('usuario').then(async (usuario) => {
           if(usuario!=null)
@@ -79,34 +79,26 @@ hacerPing(){
     this._hallazgo.pingHttp('').then(res=>{
         if (this.conexion==null) {
          this.conexion=true;
-         this._toast.presentToast('Conectado a red CPX','success','bottom')
+         this._toast.presentToast('Conectado a red CPX','success','bottom');
          this.error='';
             return this.conexion;
         }
     });
-    setTimeout(() => {
-      if (this.conexion==null){
-        this._toast.presentToastOpions('','Verifique su coneccion a red CPX','md-information-circle').then(res=>{
-          this.hacerPing();
-        })
-        this.conexion=false;
-        return this.conexion;
-    }},3000);
 }
 
 async logForm(form:NgForm){
+  this._loading.presentLoading('Cargando', 2000);
   
   let usuario=form.value.usuario;
   let password=form.value.password;
   this.loading=true;
    let endPoint= `http://10.11.1.8:81/api/usuario/${usuario}/`+encodeURIComponent(password);
 
-   this.http.get(endPoint) 
-   .subscribe((data:{Usuario:{usuarioID:number}})=>
+   this.http.get(endPoint).subscribe((data:{Usuario:{usuarioID:number}})=>
    {
     this.loading=false;
       if(data.Usuario[0].usuarioID!=null){
-      let user=data['Usuario'];
+              let user=data['Usuario'];
               this.storage.set('who', user[0].usuarioID);
               this.storage.set('where', user[0].empresaID);   
               this.storage.set('usuario', user[0].usuario);
@@ -170,9 +162,9 @@ async cambiar_pass() {
           this._usuario.updateData(data).subscribe(data=>{ 
             let respuesta:string =data.toString();           
             if(respuesta==="Contraseña actualizada con exito")
-            this._toast.presentToast(''+data,'success','bottom')
+            this._toast.presentToast(''+data,'success','bottom');
 
-            this._toast.presentToast(''+data,'secondary','bottom')
+            this._toast.presentToast(''+data,'secondary','bottom');
 
           },err=>{
              console.log("err"+JSON.stringify(err));   

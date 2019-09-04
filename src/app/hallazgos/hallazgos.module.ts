@@ -18,23 +18,29 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { EditarComponent } from './hallazgo-detalle/editar/editar.component';
 import { EditarComponentModal } from '../modals/editar/editar.component2';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-
-
-
-
-
-
+import { MaterialModule } from '../material/material.module';
+import { MenuHallazgosComponent } from './menu-hallazgos/menu-hallazgos.component';
+import { AreasListHallazgosComponent } from './admi/areas-list-hallazgos/areas-list-hallazgos.component';
+import { AddAreaHallazgosComponent } from './admi/areas-list-hallazgos/add-area-hallazgos/add-area-hallazgos.component';
+import { SubAreasListHallazgosComponent } from './admi/sub-areas-list-hallazgos/sub-areas-list-hallazgos.component';
+import { AddSubAreaHallazgosComponent } from './admi/sub-areas-list-hallazgos/add-sub-area-hallazgos/add-sub-area-hallazgos.component';
+import { EventListHallazgosComponent } from './admi/eventos/event-list-hallazgos/event-list-hallazgos.component';
+import { AddEventoComponent } from './admi/eventos/event-list-hallazgos/add-evento/add-evento.component';
+import { EditEventComponent } from './admi/eventos/event-list-hallazgos/edit-event/edit-event.component';
+import { ModalChangeAreaComponent } from '../hallazgo-complete/modal-change-area/modal-change-area.component';
+import { EditComponentValorComponent } from './admi/areas-list-hallazgos/edit-component-valor/edit-component-valor.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HallazgosPage,
-    children:[{path:'/listHallazgos', component:ListHallazgoComponent}]
+    children:[{path:'/listHallazgos', component: ListHallazgoComponent}]
   }
 ];
 
 @NgModule({
   imports: [
+    MaterialModule,
     CanvasWhiteboardModule,
     ReactiveFormsModule,
     CommonModule,
@@ -43,8 +49,38 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EditarComponentModal,EditarComponent,HallazgosPage,ListHallazgoComponent,HallazgoDetalleComponent,ScrollUpdateComponent,NewThingComponent,AddInfoHallazgoComponent],
+  declarations: [EditarComponentModal,
+                 EditarComponent,
+                 HallazgosPage,
+                 ListHallazgoComponent,
+                 HallazgoDetalleComponent,
+                 ScrollUpdateComponent,
+                 NewThingComponent,
+                 AddInfoHallazgoComponent,
+                 MenuHallazgosComponent,
+                 AreasListHallazgosComponent,
+                 AddAreaHallazgosComponent,
+                 SubAreasListHallazgosComponent,
+                 AddSubAreaHallazgosComponent,
+                 EventListHallazgosComponent,
+                 AddEventoComponent,
+                 EditEventComponent,
+                 EditComponentValorComponent
+                 ],
+
   providers:[ScreenOrientation],
-  entryComponents:[ListHallazgoComponent,EditarComponentModal,EditarComponent]
+  entryComponents:[AddInfoHallazgoComponent,
+                   ListHallazgoComponent,
+                  EditarComponentModal,
+                  EditarComponent,
+                  AreasListHallazgosComponent,
+                  AddAreaHallazgosComponent,
+                  SubAreasListHallazgosComponent,
+                  AddSubAreaHallazgosComponent,
+                  EventListHallazgosComponent,
+                  AddEventoComponent,
+                  EditEventComponent,
+                  EditComponentValorComponent
+                  ]
 })
 export class HallazgosPageModule {}

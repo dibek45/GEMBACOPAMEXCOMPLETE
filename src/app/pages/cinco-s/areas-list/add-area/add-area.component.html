@@ -1,0 +1,25 @@
+<ol>
+    <li>
+      <mat-form-field>
+        <input matInput [(ngModel)]="name" placeholder="Nombre del departamento?">
+      </mat-form-field>
+    </li>
+    <li>
+        <form>
+            <h3>Responsable</h3>
+            <mat-form-field>
+              <mat-label>Responsable</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="responsable">
+                <mat-option *ngFor="let item of responsables" [value]="item.id">
+                  {{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+    </li>
+    
+<div class="example-button-row">
+  <button mat-raised-button style="margin: 4px; margin-bottom: 0px" (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary"  class="btn-acept" (click)="saveArea()" >Aceptar</button>
+</div>
+  </ol>

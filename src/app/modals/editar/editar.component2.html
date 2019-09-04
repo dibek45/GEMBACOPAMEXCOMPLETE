@@ -6,7 +6,7 @@
         <h2 style="text-align: center;">Actualizar hallazgo</h2>
       </ion-text>
 </div>
-    <cdk-virtual-scroll-viewport  style="height: 500px" itemSize="90" >
+    <cdk-virtual-scroll-viewport  style="height: 600px" itemSize="90" >
 
     <ion-list-header color="warning">
        <h3> Descrición</h3>
@@ -14,7 +14,24 @@
   <ion-item>
     <ion-input type="text"  name="descripcion" formControlName="descripcion"></ion-input>
   </ion-item>
- 
+  <ion-list>
+    <ion-radio-group formControlName="tipo_accion">
+        <ion-list-header color="warning">
+           <h3>Tipo acción</h3> 
+          </ion-list-header>
+  
+      <ion-item>
+        <ion-label >Acción</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Inversión</ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+  </ion-list>
   <ion-list>
     <ion-radio-group  formControlName="tipo">
       <ion-list-header color="warning">
@@ -74,24 +91,7 @@
     </ion-radio-group>
   </ion-list>
 
-  <ion-list>
-      <ion-radio-group formControlName="tipo_accion">
-          <ion-list-header color="warning">
-             <h3>Tipo acción</h3> 
-            </ion-list-header>
-    
-        <ion-item>
-          <ion-label >Acción</ion-label>
-          <ion-radio value="1"></ion-radio>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label>Inversión</ion-label>
-          <ion-radio value="2"></ion-radio>
-        </ion-item>
-  
-      </ion-radio-group>
-    </ion-list>
+ 
 
 <ion-button expand="full" color="light"   (click)="cancel()" >Cancelar</ion-button>
 <ion-button expand="full" color="success" (click)="update()" >Actualizar datos</ion-button>

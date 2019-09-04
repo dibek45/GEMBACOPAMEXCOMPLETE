@@ -1,20 +1,25 @@
-<form [formGroup]="form">
 
-<ion-list>
-  <ion-item>
-    <ion-label>Area</ion-label>
-    <ion-select placeholder="Selecciona" okText="Aceptar" cancelText="Cancelar" (ionChange)="getarea($event)" formControlName="evento" >
-      <ion-select-option *ngFor="let evento of eventos; let i=index" [value]="evento">{{evento.name}}</ion-select-option>
+      <form [formGroup]="form">
+
+          <ion-list style="padding-bottom: 0px; border-radius: 5px;padding-top: 0px;">
+            <ion-item color="light">
+              <ion-label>Area</ion-label>
+              <ion-select placeholder="Selecciona" okText="Aceptar" cancelText="Cancelar" (ionChange)="getarea($event)" formControlName="evento" >
+                <ion-select-option *ngFor="let evento of eventos; let i=index" [value]="evento">{{evento.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          
+            <ion-item color="light">
+              <ion-label>Subarea</ion-label>
+              <ion-select  okText="Aceptar" cancelText="Cancelar" placeholder="Selecciona" (ionChange)="getSubarea($event)" formControlName="subareaID">
+                <ion-select-option *ngFor="let subarea of subareas; let i=index" [value]="subarea.subareaID">{{subarea.subarea}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          
+      </form>
+      <div style="float: right; margin: 1px;margin-bottom: 0px" (click)="refresh()">
+        <ion-icon color="primary" ios="ios-refresh-circle" md="md-refresh-circle" style="font-size: 20px"></ion-icon>
+      </div>
       
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>Subarea</ion-label>
-    <ion-select  okText="Aceptar" cancelText="Cancelar" placeholder="Selecciona" (ionChange)="getSubarea($event)" formControlName="subareaID">
-      <ion-select-option *ngFor="let subarea of subareas; let i=index" [value]="subarea.subareaID">{{subarea.subarea}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-</ion-list>
-
-</form>
+    

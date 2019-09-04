@@ -1,0 +1,25 @@
+<form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Selecciona area</mat-label>
+      <mat-select  (ngModelChange)="getarea($event)" formControlName="evento">
+        <mat-option [value]="evento" *ngFor="let evento of eventos; let i=index">{{evento.area}} {{evento.inicio |date:"MM/dd/yy" }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+
+  
+    <mat-form-field>
+      <mat-label>Selecciona sub-area</mat-label>
+      <mat-select (ngModelChange)="getSubarea($event)" formControlName="subareaID">
+        <mat-option [value]="subarea" *ngFor="let subarea of subareas; let i=index" >{{subarea.subarea}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+    <div class="example-button-row">
+      <button mat-raised-button style="margin: 4px; margin-bottom: 0px" (click)="onCancel()">Cancelar</button>
+      <button mat-raised-button color="primary"  class="btn-acept" (click)="saveHallazgoUpdate()" >Aceptar</button>
+    </div>
+  </form>
+ 
+    
+  

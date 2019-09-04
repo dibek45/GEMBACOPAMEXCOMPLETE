@@ -31,7 +31,7 @@ export class HallazgosService {
             db.executeSql('DELETE FROM hallazgo WHERE hallazgoID=?', [halazgoID])
               .then(() => resolve('Executed SQL'))
               .catch(e => reject(JSON.stringify(e)));
-               db.executeSql('DELETE FROM imagen WHERE hallazgoID=?', [halazgoID])
+            db.executeSql('DELETE FROM imagen WHERE hallazgoID=?', [halazgoID])
               .then(() => resolve('Executed SQL'))
               .catch(e => reject(JSON.stringify(e)));
           })
@@ -42,7 +42,7 @@ export class HallazgosService {
 
     get_hallazgos(observadorID,plataformaID) {
       let eventos = [];
-     return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
        this.sqlite.create({
          name: 'data4.db',
          location: 'default'
@@ -51,10 +51,10 @@ export class HallazgosService {
 
               db.executeSql('CREATE TABLE IF NOT EXISTS hallazgo(hallazgoID INTEGER PRIMARY KEY, fecha TEXT, tipo_eventoID INTEGER, areaID INTEGER,tipo_hallazgoID TEXT,tipo_implementacionID INTEGER,descripcion TEXT,observadorID INTEGER,idEvento INTEGER, latitude TEXT,longitude TEXT,plataformaID INTEGER)', [])
              .then(res => console.log('BIEN')).catch(e => console.log(JSON.stringify(e)));
-             db.executeSql('CREATE TABLE IF NOT EXISTS imagen(rowid INTEGER PRIMARY KEY, imagen TEXT,imagen_mini TEXT,  fecha TEXT, hallazgoID INTEGER, FOREIGN KEY(hallazgoID) REFERENCES hallazgo (hallazgoID))', [])
+              db.executeSql('CREATE TABLE IF NOT EXISTS imagen(rowid INTEGER PRIMARY KEY, imagen TEXT,imagen_mini TEXT,  fecha TEXT, hallazgoID INTEGER, FOREIGN KEY(hallazgoID) REFERENCES hallazgo (hallazgoID))', [])
               .then(() => console.log('Executed SQL'))
-              .catch(e => console.log(JSON.stringify(e)));
-             db.executeSql('SELECT h.idEvento, h.hallazgoID,tipo_eventoID,h.fecha,areaID,tipo_hallazgoID,descripcion,tipo_implementacionID,i.imagen,h.observadorID, h.latitude,h.longitude FROM hallazgo h LEFT JOIN (select hallazgoID,min(rowid) rowid FROM imagen group by hallazgoID) i0 ON h.hallazgoID=i0.hallazgoID LEFT JOIN imagen i ON i.rowid=i0.rowid WHERE observadorID=? AND plataformaID=?  ORDER BY h.hallazgoID DESC', [observadorID,plataformaID])
+              .catch(e => reject(JSON.stringify(e)));
+              db.executeSql('SELECT h.idEvento, h.hallazgoID,tipo_eventoID,h.fecha,areaID,tipo_hallazgoID,descripcion,tipo_implementacionID,i.imagen,h.observadorID, h.latitude,h.longitude FROM hallazgo h LEFT JOIN (select hallazgoID,min(rowid) rowid FROM imagen group by hallazgoID) i0 ON h.hallazgoID=i0.hallazgoID LEFT JOIN imagen i ON i.rowid=i0.rowid WHERE observadorID=? AND plataformaID=?  ORDER BY h.hallazgoID DESC', [observadorID,plataformaID])
              .then((res) => {
             
                for (let i = 0; i < res.rows.length; i++) {
@@ -74,10 +74,10 @@ export class HallazgosService {
 
 
 
-    async postHallazgos(arreglo,observadorID,latitude:string,longitude:string, plataformaID:number) {
+async postHallazgos(arreglo,observadorID,latitude:string,longitude:string, plataformaID:number) {
           let  myDate: String = new Date().toISOString();
           
-           return await new Promise((resolve, reject) => {
+          return await new Promise((resolve, reject) => {
               this.sqlite.create({
                 name: 'data4.db',
                 location: 'default'
@@ -89,10 +89,7 @@ export class HallazgosService {
                   reject(error);
               }).catch(e => reject(JSON.stringify(e)))
           }).catch(e => reject(JSON.stringify(e)));
-
         })
-
-        
   }
 
   async editHallazgo(descripcion:string,tipo_implementacionID:number,tipo_hallazgoID:number,hallazgoID:number) {
@@ -291,7 +288,7 @@ await alert.present();
   //hallazgoLocal
   get_hallazgoLocalByID(hallazgoID) {
     let eventos = [];
-   return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
      this.sqlite.create({
        name: 'data4.db',
        location: 'default'
@@ -318,7 +315,7 @@ await alert.present();
 
   }
   insert_hallazgoHttp(eventoID:number,fecha:string,areaID:number,subareaID:number,tipo_hallazgoID:number,tipo_implementacionID:number,
-    descripcion:string,observadorID:number,latitude:string,longitude:string) {
+                      descripcion:string,observadorID:number,latitude:string,longitude:string) {
   
     const endPoint=`http://10.11.1.8:81/api/hallazgo`;
 
@@ -326,18 +323,24 @@ await alert.present();
                       "tipo_hallazgoID": tipo_hallazgoID,"tipo_implementacionID": tipo_implementacionID,
                       "descripcion": descripcion,"comentarios": "","subareaID": subareaID,"observadorID": observadorID,
                       "latitude":latitude,"longitude":longitude
-              })
-        }
+              });
+    }
 
     putStateHallazgoHttp(hallazgoID:Number,stateID) {
           const endPoint=`http://10.11.1.8:81/api/hallazgoState/${hallazgoID}/${stateID}`;
           return this.http.put(endPoint,{});
-        }
+    }
+
+    
+    puthallazgoEventoHttp(subareaID: number, eventoID: number, hallazgoID: number) {
+      const endPoint=`http://10.11.1.8:81/api/hallazgoEvento/${subareaID}/${eventoID}/${hallazgoID}`;
+      return this.http.put(endPoint,{});
+    }
 
     putComentarioHallazgoHttp(hallazgoID:Number,comentario:String) {
           const endPoint=`http://10.11.1.8:81/api/hallazgoComentario/${hallazgoID}/${comentario}`;
           return this.http.put(endPoint,{});
-        }
+    }
 
 
     pingHttp(url) {
@@ -347,11 +350,6 @@ await alert.present();
         },err=>{
           reject('No');
         });
-  
-        setTimeout(() =>{
-          subscription.unsubscribe();
-          return 'No'
-        } , 1000);
           })
       }
 

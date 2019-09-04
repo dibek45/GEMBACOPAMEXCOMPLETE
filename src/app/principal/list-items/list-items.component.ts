@@ -19,13 +19,13 @@ export class ListItemsComponent implements OnInit {
 @Input() usuario:string;
 @Input() whereID:number;
 @Input() whoID:number;
+@Input() permiso:number;
 p;
 
 @Output() location= new EventEmitter();
 @Output() total_hallazgos= new EventEmitter();
 hallazgos;
 coordinates: { latitude: number; longitude: number; };
-
   
   constructor(private storage:Storage,private _toast:ToastService,
     //private _location:LocationService, 
@@ -90,7 +90,7 @@ coordinates: { latitude: number; longitude: number; };
    */
 
    async obtenerHallazgo(hallazgo:any) {
-    this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":hallazgo.hallazgoID}]);
+    this.router.navigate(['/hallazgo-complete',{"usuario":this.usuario,"plataformaID":this.plataformaID,"whereID":this.whereID, "whoID":this.whoID,"hallazgoID":hallazgo.hallazgoID,"permiso":this.permiso}]);
   }
 
   
